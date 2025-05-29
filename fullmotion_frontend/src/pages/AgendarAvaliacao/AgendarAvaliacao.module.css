@@ -1,0 +1,107 @@
+.bg {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #49c5b6 0%, #100F0D 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    background: #181818e6;
+    padding: 3rem; 
+    border-radius: 16px;
+    box-shadow: 0 4px 24px #0008;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 600px;
+    max-width: 90vw;
+}
+
+h2 {
+    color: #49c5b6;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.inputGroup {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.floatingInput {
+    width: 95%;
+    padding: 1rem 1rem 0.5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #232323;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    resize: none;
+    transition: box-shadow 0.2s;
+}
+
+.floatingInput:focus {
+    box-shadow: 0 0 0 2px #49c5b6;
+}
+
+.floatingLabel {
+    position: absolute;
+    left: 1rem;
+    top: 1.05rem;
+    color: #aaa;
+    font-size: 1rem;
+    pointer-events: none;
+    background: transparent;
+    transition: 
+        top 0.2s, 
+        left 0.2s, 
+        font-size 0.2s, 
+        color 0.2s;
+    padding: 0 0.2rem;
+}
+
+.floatingInput:focus + .floatingLabel,
+.filled {
+    top: -0.5rem;
+    left: 0.8rem;
+    font-size: 0.85rem;
+    color: #49c5b6;
+    background: #232323;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: #49c5b6;
+    color: #100F0D;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn:hover {
+    background: #fff;
+    color: #49c5b6;
+}
+
+/* Campo data sem label flutuante */
+.inputGroup input[type="date"] {
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #232323;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    margin-bottom: 0.2rem;
+}

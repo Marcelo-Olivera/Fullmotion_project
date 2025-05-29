@@ -1,0 +1,40 @@
+.slide {
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    z-index: 1;
+  }
+  
+  .bannerImage {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  :global(.slick-dots) {
+    position: absolute;
+    bottom: 50px; /* Ajusta a altura dentro da imagem */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex !important;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  :global(.slick-dots li) {
+    margin: 0 5px !important; /* Espaçamento entre os dots */
+  }
+  
+  :global(.slick-dots li button:before) {
+    font-size: 12px !important; /* Tamanho das bolinhas */
+    color: white !important; /* Cor padrão */
+    opacity: 0.5 !important;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  :global(.slick-dots li.slick-active button:before) {
+    color: #49c5b6 !important; /* Cor da bolinha ativa */
+    opacity: 1 !important;
+  }

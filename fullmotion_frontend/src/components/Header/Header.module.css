@@ -1,0 +1,122 @@
+.logo img {
+    width: 200px;
+}
+
+.header{
+    max-width: 2000px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;    
+    background-color: #100F0D;
+    box-sizing: border-box;
+    box-shadow: #555 0px 0px 4px;
+    z-index: 10;
+}
+
+.nav{
+    display: flex;
+    padding-left: 40px;
+    justify-content: left;
+    align-items: center;
+    flex-grow: 1;
+    gap: 2em;
+}
+
+.a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #49c5b6;
+}
+
+.a:hover{
+    color: #49c5b9a6;
+}
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -350px; /* Começa fora da tela à direita */
+    width: 300px;
+    height: 100%;
+    background: #100F0D;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 20;
+}
+
+.drawer.open {
+    right: 0; /* Quando aberto, desliza para dentro */
+  }
+
+.drawerNav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+.link{
+    text-decoration: none;
+    font-size: 18px;
+    color: #49c5b6; 
+  }
+
+.closeButton {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: #49c5b6;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.closeButton:hover {
+    background-color: #222 ;
+    border-radius: 12px;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.menu{
+    margin-right: 32px;
+    color:#49c5b6;
+    background-color: #100F0D;
+    border: none;
+}
+
+.menu:hover{
+    background-color: #222;
+    border-radius: 12px;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    color: #49c5b6;
+    font-size: 1.5rem;
+    cursor: pointer;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.container p{
+    margin: 8px 4px;
+}
+
+.container:hover{
+    border-radius: 8px;
+    background-color: #222;
+}

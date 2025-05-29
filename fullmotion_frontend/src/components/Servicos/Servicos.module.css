@@ -1,0 +1,17 @@
+.servicos{
+    background: linear-gradient(to left, #49c5b6, #1c1c1c);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 3rem;
+    padding: 3rem;
+    gap: 2rem;
+}
+
+.cards{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: space-around;
+    align-items: center;
+}

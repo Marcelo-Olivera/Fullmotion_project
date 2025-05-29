@@ -1,0 +1,71 @@
+.contatosContainer{
+    max-width: 1000px;
+    color: #49c5b7;
+    display: grid;
+    grid-template-areas:
+        "Titulo"
+        "localização"
+        "telefone"
+        "email"
+        "redesSociais";
+    grid-template-columns: minmax(300, 1fr);
+    grid-template-rows: 1fr auto auto auto auto;
+    align-self: center;
+    gap: 1rem;
+    margin-bottom: 10px;
+    /*border-radius: 10px;*/
+    padding-right: 1rem;
+    /*background-color: #100F0D;
+    box-shadow: 0px 0px 5px rgba(73, 197, 183, 0.5);*/
+}
+
+.contatosContainer p{
+    font-size: 1rem;
+}
+
+
+.contatosUnidade{
+    grid-area: Titulo;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.localizacao{
+    grid-area: localização;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 1.5rem;
+}
+
+
+.telefone{
+    grid-area: telefone;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 1.5rem;
+}
+
+.email{
+    grid-area: email;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 1.5rem;
+}
+
+.redesSociais{
+    grid-area: redesSociais;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-left: 1.5rem;
+}
+

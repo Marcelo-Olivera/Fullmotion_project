@@ -1,0 +1,69 @@
+.sobreNos{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 3fr;
+    grid-template-areas: 
+        "titulo titulo"
+        "texto imagem";
+    width: 100%;   
+}
+
+.containerTexto{
+    grid-area: texto;
+    padding: 0 5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.containerTexto p{
+    font-size: 1.5rem;
+    color: white;
+    text-align: justify;
+}
+
+.containerImagem {
+    grid-area: imagem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.parallax {
+    width: 80%;
+    background-image: url("src/components/SobreNos/SalaFullmotion.png");
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 12px;
+}
+
+
+.titulo{
+    margin-top: 2rem;
+    grid-area: titulo;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.containerDiferenciais{
+    display: flex;
+}
+
+.containerDiferenciais ul{
+    list-style-type: none;
+}
+
+.check{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 3rem;
+    color: #49c5b6;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: left;
+}

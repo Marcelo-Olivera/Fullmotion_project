@@ -1,0 +1,34 @@
+.containerTexto{
+    padding: 0 5rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.containerTexto h1{
+    font-size: 2.5rem;
+    color: white;
+}
+
+.highlight{
+    color: #49c5b6;
+}
+
+.tituloContainer{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.titulo{
+    font-size: 1.5rem;
+    color: #49c5b6
+}
+
+.borda{
+    width: 35%;
+    height: 1px;
+    background-color: #aaa;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
