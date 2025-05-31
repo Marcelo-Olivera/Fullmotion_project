@@ -1,5 +1,6 @@
 import styles from './AgendarAvaliacao.module.css'
 import { useState } from 'react';
+import axios from 'axios'; // Importe o Axios
 
 function AgendarAvaliacao() {
     const [nome, setNome] = useState('');
@@ -13,10 +14,56 @@ function AgendarAvaliacao() {
     const [complemento, setComplemento] = useState('');
     const [bairro, setBairro] = useState('');
     const [hora, setHora] = useState('');
+    const [message, setMessage] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert('Avaliação agendada com sucesso!');
+        setMessage(''); // Limpa mensagens anteriores
+        setIsSuccess(false);
+
+        // Reúne todos os dados do formulário em um objeto,
+        // garantindo que os nomes das propriedades correspondam ao DTO do backend (CreateAppointmentDto)
+        const appointmentData = {
+            fullName: nome,
+            cpf,
+            email,
+            phone: telefone, // Backend espera 'phone', não 'telefone'
+            cep,
+            address: endereco, // Backend espera 'address', não 'endereco'
+            number: numero,
+            complement: complemento,
+            neighborhood: bairro, // Backend espera 'neighborhood', não 'bairro'
+            appointmentDate: data, // Backend espera 'appointmentDate', não 'data'
+            appointmentTime: hora, // Backend espera 'appointmentTime', não 'hora'
+        };
+
+        try {
+            // Requisição POST para o endpoint de agendamentos do backend
+            const response = await axios.post('http://localhost:3000/api/appointments', appointmentData);
+
+            console.log('Agendamento realizado com sucesso:', response.data);
+            setMessage('Avaliação agendada com sucesso!');
+            setIsSuccess(true);
+            // Opcional: limpar o formulário após o sucesso
+            setNome('');
+            setCpf('');
+            setEmail('');
+            setTelefone('');
+            setData('');
+            setCep('');
+            setEndereco('');
+            setNumero('');
+            setComplemento('');
+            setBairro('');
+            setHora('');
+
+        } catch (err: any) { // Captura erros da requisição (ex: validação 400 Bad Request)
+            console.error('Erro ao agendar avaliação:', err.response?.data || err.message);
+            // Exibe a mensagem de erro do backend (se houver) ou uma genérica
+            setMessage(err.response?.data?.message || 'Erro ao agendar avaliação. Verifique os dados e tente novamente.');
+            setIsSuccess(false);
+        }
     };
 
     return (
@@ -202,6 +249,11 @@ function AgendarAvaliacao() {
                     />
                 </div>
                 <button type="submit" className={styles.btn}>Agendar</button>
+                {message && (
+                    <p className={isSuccess ? styles.successMessage : styles.errorMessage}>
+                        {message}
+                    </p>
+                )}
             </form>
         </div>
     );

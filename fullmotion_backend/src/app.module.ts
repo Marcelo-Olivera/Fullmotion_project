@@ -5,8 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module'; // Importe o AuthModule aqui!
-// import { AppointmentsModule } from './appointments/appointments.module'; // Este virá no próximo passo
+import { AuthModule } from './auth/auth.module';
+import { AppointmentsModule } from './appointments/appointments.module'; // Importe o AppointmentsModule aqui!
 
 @Module({
   imports: [
@@ -28,8 +28,8 @@ import { AuthModule } from './auth/auth.module'; // Importe o AuthModule aqui!
       exclude: ['/api/(.*)'],
     }),
     UsersModule,
-    AuthModule, // Adicione AuthModule aqui!
-    // AppointmentsModule, // Este virá depois
+    AuthModule,
+    AppointmentsModule, // Adicione AppointmentsModule aqui!
   ],
   controllers: [],
   providers: [],
