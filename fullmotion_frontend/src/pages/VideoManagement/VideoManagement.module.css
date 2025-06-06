@@ -1,0 +1,14 @@
+/* src/pages/VideoManagement/VideoManagement.module.css */
+
+/* Exemplo: Ajustar espaçamento ou tamanho da fonte em elementos da tabela */
+.tableCell {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+}
+
+/* Exemplo: Estilo para o container principal da página */
+.managementContainer {
+  margin-top: 20px;
+  background-color: #fcfcfc;
+  border-radius: 8px;
+}

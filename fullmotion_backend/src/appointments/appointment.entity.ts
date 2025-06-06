@@ -1,46 +1,64 @@
+// src/appointments/appointment.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('appointments') // Nome da tabela no banco de dados
+// NOVO: Enum para os status do agendamento
+export enum AppointmentStatus {
+  PENDING = 'Pendente',
+  CONFIRMED = 'Confirmado',
+  COMPLETED = 'Realizado', // Mudado de 'Realizado' para 'COMPLETED' (inglês), mantendo o valor para BD como 'Realizado'
+  CANCELED = 'Cancelado',
+  AWAITING_PAYMENT = 'Aguardando Pagamento',
+}
+
+@Entity('appointments')
 export class Appointment {
-  @PrimaryGeneratedColumn('uuid') // ID único universal para cada agendamento
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  fullName: string; // Nome completo do paciente
+  fullName: string;
 
-  @Column({ unique: true }) // CPF deve ser único para evitar duplicidade de agendamentos
+  @Column({ unique: true })
   cpf: string;
 
   @Column()
   email: string;
 
   @Column()
-  phone: string; // Telefone de contato
+  phone: string;
 
   @Column()
   cep: string;
 
   @Column()
-  address: string; // Endereço (logradouro)
+  address: string;
 
   @Column()
-  number: string; // Número do endereço
+  number: string;
 
-  @Column({ nullable: true }) // Complemento é opcional
+  @Column({ nullable: true })
   complement?: string;
 
   @Column()
-  neighborhood: string; // Bairro
+  neighborhood: string;
 
-  @Column({ type: 'date' }) // Armazena apenas a data (YYYY-MM-DD)
+  @Column({ type: 'date' })
   appointmentDate: string;
 
-  @Column({ type: 'time' }) // Armazena apenas a hora (HH:MM:SS)
+  @Column({ type: 'time' })
   appointmentTime: string;
 
-  @CreateDateColumn() // Coluna para a data de criação do registro
+  // NOVO: Coluna para o status do agendamento
+  @Column({
+    type: 'enum',
+    enum: AppointmentStatus,
+    default: AppointmentStatus.PENDING, // Status padrão quando um agendamento é criado
+  })
+  status: AppointmentStatus; // O tipo da coluna é o enum AppointmentStatus
+
+  @CreateDateColumn()
   createdAt: Date;
 
-  @UpdateDateColumn() // Coluna para a data da última atualização do registro
+  @UpdateDateColumn()
   updatedAt: Date;
 }

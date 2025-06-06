@@ -1,3 +1,4 @@
+// src/App.tsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import './index.css';
 import Header from "./components/Header";
@@ -8,8 +9,28 @@ import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
 import React from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import AdminRoute from './components/AdminRoute'; // Continua para rotas EXCLUSIVAS de Admin
+import AuthRoleRoute from './components/AuthRoleRoute'; // NOVO: Para rotas com roles específicas
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import UploadVideoPage from './pages/UploadVideo';
+import VideoManagementPage from './pages/VideoManagement';
 
-// Componente para proteger rotas (sem alterações aqui)
+enum UserRole {
+  ADMIN = 'admin',
+  PHYSIOTHERAPIST = 'physiotherapist',
+  PATIENT = 'patient',
+}
+
+// --- DEFINIÇÃO DO TEMA PERSONALIZADO DO MATERIAL-UI ---
+const customTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#49c5b6',
+    },
+  },
+});
+
+// --- COMPONENTES DE ROTA PROTEGIDA ---
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
   if (isAuthenticated === null) {
@@ -18,51 +39,61 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
-// Componente auxiliar para a rota "/" que redireciona condicionalmente
 const HomeConditionalRedirect = () => {
   const { isAuthenticated } = useAuth();
-
   if (isAuthenticated === null) {
-    return null; // ou um loader simples, se preferir
+    return null;
   }
-
-  // Se o usuário está autenticado, redireciona para o dashboard
-  // Caso contrário, renderiza o componente Inicio
   return isAuthenticated ? <Navigate to="/dashboard" replace /> : <Inicio />;
 };
 
-
+// --- COMPONENTE PRINCIPAL DO APP ---
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <Header />
-        <Routes>
-          {/* Rota raiz: Lida com o redirecionamento ou renderiza Inicio */}
-          <Route path="/" element={<HomeConditionalRedirect />} />
+    <ThemeProvider theme={customTheme}>
+      <AuthProvider>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomeConditionalRedirect />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/agendar" element={<AgendarAvaliacao />} />
 
-          {/* A rota /login existe para que o usuário possa ir explicitamente para ela */}
-          <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
 
-          {/* Rota de Agendamento (pode ser acessível sem login) */}
-          <Route path="/agendar" element={<AgendarAvaliacao />} />
+            {/* Rota para Upload de Vídeos: Continua sendo EXCLUSIVA de Admin */}
+            <Route
+              path="/admin/upload-video"
+              element={
+                <AdminRoute>
+                  <UploadVideoPage />
+                </AdminRoute>
+              }
+            />
 
-          {/* Rota para o Dashboard (protegida - requer login) */}
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
+            {/* NOVO: Rota para Gerenciamento de Vídeos: Acessível por ADMIN e FISIOTERAPEUTA */}
+            <Route
+              path="/admin/manage-videos"
+              element={
+                <AuthRoleRoute allowedRoles={[UserRole.ADMIN, UserRole.PHYSIOTHERAPIST]}> {/* <--- MUDANÇA AQUI */}
+                  <VideoManagementPage />
+                </AuthRoleRoute>
+              }
+            />
 
-          {/* Rota para páginas não encontradas */}
-          <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
-        </Routes>
-        <Footer />
-      </Router>
-    </AuthProvider>
+            <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
+          </Routes>
+          <Footer />
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

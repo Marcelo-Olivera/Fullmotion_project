@@ -4,15 +4,15 @@
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - var(--header-height, 60px) - var(--footer-height, 60px)); /* Ajusta para Header/Footer */
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: #1c1e22;
+    color: #49c5b6;
     font-family: Arial, sans-serif;
     text-align: center;
     padding: 20px;
 }
 
 .dashboardContainer h1 {
-    color: #0056b3;
+    color: #49c5b6;
     margin-bottom: 15px;
 }
 
@@ -40,12 +40,12 @@
 }
 
 .navLink {
-    background-color: #007bff; /* Azul primário */
+    background-color: #49c5b6; /* Azul primário */
     color: white;
 }
 
 .navLink:hover {
-    background-color: #0056b3; /* Azul mais escuro no hover */
+    background-color: #37a094; /* Azul mais escuro no hover */
 }
 
 .logoutBtn {

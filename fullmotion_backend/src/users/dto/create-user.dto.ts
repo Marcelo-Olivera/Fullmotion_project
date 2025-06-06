@@ -13,5 +13,5 @@ export class CreateUserDto {
   @IsOptional()
   // Atualize o IsEnum para incluir as novas roles
   @IsEnum(UserRole, { message: 'Role inválida. Deve ser admin, patient ou physiotherapist.' })
-  role?: UserRole;
+  role?: UserRole; // Permite que o admin defina a role do usuário.
 }

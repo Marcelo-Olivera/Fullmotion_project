@@ -18,7 +18,7 @@ export class AuthService {
    */
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.usersService.findByEmail(email);
-    if (user && (await bcrypt.compare(pass, user.password))) {
+    if (user && user.password && (await bcrypt.compare(pass, user.password))) {
       // Remove a senha do objeto antes de retorná-lo
       // Isso é importante para não expor a senha em outros lugares.
       const { password, ...result } = user;

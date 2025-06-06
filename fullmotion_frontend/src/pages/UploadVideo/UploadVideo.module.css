@@ -1,0 +1,21 @@
+/* src/pages/UploadVideo/UploadVideo.module.css */
+
+.uploadContainer {
+  /* Exemplo de estilo para o container */
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.pageTitle {
+  /* Exemplo de estilo para o título da página */
+  color: #49c5b6; /* Cor primária do Material-UI */
+  margin-bottom: 20px;
+}
+
+/* Você pode adicionar mais estilos aqui conforme necessário */
+/* .myCustomButton {
+  background-color: #28a745;
+  color: white;
+} */
