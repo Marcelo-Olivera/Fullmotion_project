@@ -1,19 +1,12 @@
-// src/pages/Dashboard/Dashboard.tsx
 import { useEffect, useState } from 'react';
-import styles from './Dashboard.module.css';
+import styles from './Dashboard.module.css'; // Mantenha o CSS Module
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-
-import ScheduleTable from './ScheduleTable';
-
-// Importe o UserRole, se ainda não estiver global ou em outro lugar
-// import { UserRole } from '../../users/user.entity'; // Exemplo de importação do enum
+import { Link } from 'react-router-dom'; // Importe 'Link'
 
 function Dashboard() {
     const { isAuthenticated, user } = useAuth();
     const [userEmail, setUserEmail] = useState<string | null>(null);
     const [userRole, setUserRole] = useState<string | null>(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (isAuthenticated && user) {
@@ -25,20 +18,19 @@ function Dashboard() {
         }
     }, [isAuthenticated, user]);
 
-    const handleManageVideosClick = () => {
-        navigate('/admin/manage-videos');
-    };
+        // Funções de navegação para os botões
+//    const handleManageVideosClick = () => {
+//        navigate('/admin/manage-videos');
+//    };
+//
+//    const handleManageUsersClick = () => {
+//        navigate('/admin/manage-users');
+//    };
 
-    // Função para navegar para a página de gerenciamento de usuários
-    const handleManageUsersClick = () => {
-        navigate('/admin/manage-users'); // Assumindo que você criará essa rota/página no futuro
-    };
-
-    // Função para navegar para a página de relatórios financeiros
-    const handleFinancialReportsClick = () => {
-        navigate('/admin/financial-reports'); // Assumindo que você criará essa rota/página no futuro
-    };
-
+    // A função handleFinancialReportsClick estava comentada no seu código, a manterei comentada aqui.
+    // const handleFinancialReportsClick = () => {
+    //     navigate('/admin/financial-reports');
+    // };
 
     return (
         <div className={styles.dashboardContainer}>
@@ -48,41 +40,58 @@ function Dashboard() {
             <nav className={styles.dashboardNav}>
                 {userRole === 'patient' && (
                     <>
-                        <a href="/agendar" className={styles.navLink}>Agendar Nova Avaliação</a>
-                        <button className={styles.navLink}>Meu Histórico de Agendamentos</button>
-                        <button className={styles.navLink}>Meus Pagamentos</button>
-                        <button className={styles.navLink}>Meus Vídeos</button> {/* Página de vídeos do paciente */}
+                        {/* Opções originais do paciente (mantidas) */}
+                        {/* <Link to="/agendar" className={styles.navLink}>Agendar Nova Avaliação</Link> */}
+                        {/* <button className={styles.navLink}>Meu Histórico de Agendamentos</button> */}
+                        {/* <button className={styles.navLink}>Meus Pagamentos</button> */}
+
+                        {/* O card "Meus Vídeos" já no seu padrão */}
+                        <div className={styles.dashboardGrid}>
+                            <Link to="/patient/my-videos" className={styles.dashboardCard}>
+                                <h3>Meus Vídeos</h3>
+                                <p>Acesse todos os vídeos de seus exercícios.</p>
+                            </Link>
+                        </div>
                     </>
                 )}
                 {(userRole === 'physiotherapist' || userRole === 'admin') && (
-                    <>
-                        <a href="/dashboard/schedules" className={styles.navLink}>Planilha de Agendamentos</a>
+                    <div className={styles.dashboardGrid}> {/* <--- NOVO: Aplica o grid aqui para os cards */}
+                        {/* Opções compartilhadas entre fisioterapeuta e admin */}
+                        {/* Planilha de Agendamentos (mantida como Link simples) */}
+                        {/* <Link to="/dashboard/schedules" className={styles.navLink}>Planilha de Agendamentos</Link> */}
                         
-                        {/* BOTÕES VISÍVEIS SOMENTE PARA ADMIN */}
-                        {userRole === 'admin' && ( // <--- NOVA CONDIÇÃO AQUI
+                        {/* CARD: Gerenciar Vídeos (para Fisioterapeuta e Admin) */}
+                        <Link to="/admin/manage-videos" className={styles.dashboardCard}> {/* <--- Usando o padrão dashboardCard */}
+                            <h3>Gerenciar Vídeos</h3>
+                            <p>Faça upload e gerencie vídeos de exercícios.</p>
+                        </Link>
+
+                        {/* CARDS EXCLUSIVOS para ADMIN */}
+                        {userRole === 'admin' && ( 
                             <>
-                                <button onClick={handleManageUsersClick} className={styles.navLink}>
-                                    Gerenciar Usuários
-                                </button>
-                                <button onClick={handleFinancialReportsClick} className={styles.navLink}>
+                                {/* CARD: Gerenciar Usuários (apenas para Admin) */}
+                                <Link to="/admin/manage-users" className={styles.dashboardCard}> {/* <--- Usando o padrão dashboardCard */}
+                                    <h3>Gerenciar Usuários</h3>
+                                    <p>Crie, liste e delete contas de usuários.</p>
+                                </Link>
+
+                                {/* Relatórios Financeiros (mantido como botão simples ou Link, se quiser) */}
+                                {/* <button onClick={handleFinancialReportsClick} className={styles.navLink}>
                                     Relatórios Financeiros
-                                </button>
+                                </button> */}
+                                {/* Você pode converter este também para um dashboardCard se quiser */}
                             </>
                         )}
-
-                        {/* BOTÃO GERENCIAR VÍDEOS (visível para Fisioterapeuta e Admin) */}
-                        <button onClick={handleManageVideosClick} className={styles.navLink}>
-                            Gerenciar Vídeos
-                        </button>
-                    </>
+                    </div> 
                 )}
             </nav>
 
-            {(userRole === 'physiotherapist' || userRole === 'admin') && (
+            {/* Conteúdo adicional do dashboard, visível para fisioterapeuta e admin */}
+            {/* {(userRole === 'physiotherapist' || userRole === 'admin') && (
                 <div className={styles.dashboardContent}>
                     <ScheduleTable />
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

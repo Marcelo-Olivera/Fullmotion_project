@@ -80,4 +80,9 @@ export class UsersService {
       throw new NotFoundException(`Usuário com ID "${id}" não encontrado para exclusão.`);
     }
   }
+
+  async save(user: User): Promise<User> {
+    return this.usersRepository.save(user);
+  }
+
 }

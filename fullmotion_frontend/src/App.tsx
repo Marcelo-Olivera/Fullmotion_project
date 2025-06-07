@@ -10,10 +10,14 @@ import Dashboard from "./pages/Dashboard";
 import React from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import AdminRoute from './components/AdminRoute'; // Continua para rotas EXCLUSIVAS de Admin
-import AuthRoleRoute from './components/AuthRoleRoute'; // NOVO: Para rotas com roles específicas
+import AuthRoleRoute from './components/AuthRoleRoute'; // Para rotas com roles específicas
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import UploadVideoPage from './pages/UploadVideo';
 import VideoManagementPage from './pages/VideoManagement';
+import PatientVideosPage from './pages/PatientVideos';
+import UserManagementPage from './pages/UserManagement';
+import EsqueceuSenha from "./pages/EsqueceuSenha";
+import ResetPasswordPage from './pages/ResetPassword'; // <-- NOVO: Importe a página de redefinição de senha
 
 enum UserRole {
   ADMIN = 'admin',
@@ -58,6 +62,7 @@ function App() {
             <Route path="/" element={<HomeConditionalRedirect />} />
             <Route path="/login" element={<Login />} />
             <Route path="/agendar" element={<AgendarAvaliacao />} />
+            <Route path="/forgot-password" element={<EsqueceuSenha />} />
 
             <Route
               path="/dashboard"
@@ -78,15 +83,36 @@ function App() {
               }
             />
 
-            {/* NOVO: Rota para Gerenciamento de Vídeos: Acessível por ADMIN e FISIOTERAPEUTA */}
+            {/* Rota para Gerenciamento de Vídeos: Acessível por ADMIN e FISIOTERAPEUTA */}
             <Route
               path="/admin/manage-videos"
               element={
-                <AuthRoleRoute allowedRoles={[UserRole.ADMIN, UserRole.PHYSIOTHERAPIST]}> {/* <--- MUDANÇA AQUI */}
+                <AuthRoleRoute allowedRoles={[UserRole.ADMIN, UserRole.PHYSIOTHERAPIST]}> 
                   <VideoManagementPage />
                 </AuthRoleRoute>
               }
             />
+            <Route
+              path="/patient/my-videos" 
+              element={
+                <AuthRoleRoute allowedRoles={[UserRole.PATIENT]}> 
+                  <PatientVideosPage /> 
+                </AuthRoleRoute>
+              }
+            />
+
+            {/* Rota para a Página de Gerenciamento de Usuários (APENAS ADMIN) */}
+            <Route
+              path="/admin/manage-users" 
+              element={
+                <AdminRoute> 
+                  <UserManagementPage />
+                </AdminRoute>
+              }
+            />
+
+            {/* NOVO: Rota para a Página de Redefinição de Senha */}
+            <Route path="/reset-password" element={<ResetPasswordPage />} /> {/* <--- ADICIONADO AQUI */}
 
             <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
           </Routes>

@@ -16,7 +16,7 @@ export class User {
   email: string;
 
   @Column()
-  password?: string; // Senha hasheada
+  password?: string;
 
   @Column({
     type: 'enum',
@@ -25,10 +25,16 @@ export class User {
   })
   role: UserRole;
 
-  // NOVO: Adicione estas linhas para que o TypeScript reconheça as propriedades
   @CreateDateColumn()
   createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  
+  @Column({ nullable: true })
+  resetToken?: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  resetTokenExpires?: Date;
 }

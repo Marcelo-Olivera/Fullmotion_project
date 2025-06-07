@@ -1,98 +1,154 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Fullmotion - Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+![Tecnologias Backend](https://img.shields.io/badge/backend-Node.js%20%7C%20NestJS%20%7C%20PostgreSQL-green)
+![Status do Projeto](https://img.shields.io/badge/status-Em%20Desenvolvimento-blue)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Sobre
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Este é o projeto de backend da plataforma **Fullmotion**, construído com Node.js e o framework NestJS. Ele é responsável por toda a lógica de negócio, autenticação, gerenciamento de dados e comunicação com o banco de dados PostgreSQL.
 
-## Project setup
+## Funcionalidades da API
 
-```bash
-$ npm install
-```
+A API RESTful oferece endpoints para:
 
-## Compile and run the project
+* **Autenticação:** Registro, Login (JWT), solicitação e redefinição de senha.
+* **Gerenciamento de Usuários:** CRUD completo para administradores (listar, criar, deletar usuários de qualquer role).
+* **Gestão de Vídeos:**
+    * Upload de arquivos de vídeo (apenas Admin).
+    * Listagem de todos os vídeos (Admin e Fisioterapeuta).
+    * Visualização de vídeos liberados (Paciente).
+    * Atualização de metadados e status de acesso (Privado, Público para Pacientes, Pacientes Específicos).
+    * Deleção de vídeos (apenas Admin).
+* **Agendamentos:** Criação, listagem e atualização de agendamentos (pronto para integração via automação externa).
 
-```bash
-# development
-$ npm run start
+## Tecnologias Utilizadas
 
-# watch mode
-$ npm run start:dev
+* **Node.js**
+* **NestJS:** Framework para arquitetura modular e escalável.
+* **TypeScript:** Para tipagem estática e robustez.
+* **PostgreSQL:** Banco de dados relacional.
+* **TypeORM:** ORM para interação com o banco de dados.
+* **JWT (JSON Web Tokens):** Para autenticação e autorização stateless.
+* **Multer:** Middleware para lidar com `multipart/form-data` (upload de arquivos).
+* **Nodemailer & @nestjs-modules/mailer:** Para envio de e-mails (redefinição de senha).
+* **bcryptjs:** Para hash seguro de senhas.
+* **Docker:** Para containerização do banco de dados em ambiente de desenvolvimento.
 
-# production mode
-$ npm run start:prod
-```
+## Configuração do Ambiente Local
 
-## Run tests
+### Pré-requisitos
 
-```bash
-# unit tests
-$ npm run test
+Certifique-se de ter instalado:
 
-# e2e tests
-$ npm run test:e2e
+* Node.js (versão 18.x ou superior)
+* npm (gerenciador de pacotes do Node.js)
+* Docker e Docker Compose (para o PostgreSQL)
 
-# test coverage
-$ npm run test:cov
-```
+### Passos de Configuração
 
-## Deployment
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/SEU_USUARIO/fullmotion.git](https://github.com/SEU_USUARIO/fullmotion.git)
+    cd fullmotion/backend
+    ```
+    (Ajuste o caminho se seu repositório não for `fullmotion` ou se o backend não estiver em `backend/`)
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+2.  **Variáveis de Ambiente:**
+    * Crie um arquivo `.env` na raiz da pasta `backend/`.
+    * Copie o conteúdo de `backend/.env.example` para `backend/.env`.
+    * **Preencha as variáveis** com seus dados:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+        ```env
+        # Configurações do Banco de Dados PostgreSQL (Docker)
+        DB_HOST=localhost
+        DB_PORT=5433                # Porta mapeada no Docker Compose
+        DB_USERNAME=fullmotion_usr
+        DB_PASSWORD=sua_senha_correta_do_postgres # IMPORTANTE: use a mesma senha que usar no docker run!
+        DB_DATABASE=fullmotion_db
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+        # Chave Secreta JWT (deve ser uma string longa e aleatória)
+        JWT_SECRET=sua_chave_secreta_muito_longa_e_aleatoria_para_o_jwt_fullmotion_aqui
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+        # Configurações de E-mail SMTP (Gmail, SendGrid, etc.)
+        MAIL_HOST=smtp.gmail.com        # Ex: smtp.gmail.com (Gmail), smtp.sendgrid.net (SendGrid)
+        MAIL_PORT=587                     # Ex: 587 (STARTTLS), 465 (SSL/TLS)
+        MAIL_USER=seu_email@gmail.com   # Seu e-mail ou API Key (ex: apikey para SendGrid)
+        MAIL_PASS=sua_senha_de_app_ou_api_key # Sua senha de app do Google ou API Key do serviço
+        MAIL_FROM=no-reply@fullmotion.com # E-mail remetente
 
-## Resources
+        # URL do Frontend (para links de redefinição de senha, etc.)
+        BASE_FRONTEND_URL=http://localhost:5173 # AJUSTE PARA A PORTA REAL DO SEU FRONTEND (ex: 5173 para Vite)
+        ```
 
-Check out a few resources that may come in handy when working with NestJS:
+3.  **Iniciar o Banco de Dados PostgreSQL com Docker:**
+    * Se você não tem um contêiner PostgreSQL rodando, inicie-o:
+        ```bash
+        docker run --name fullmotion-postgres \
+                   -e POSTGRES_USER=fullmotion_usr \
+                   -e POSTGRES_PASSWORD=sua_senha_correta_do_postgres \
+                   -e POSTGRES_DB=fullmotion_db \
+                   -p 5433:5432 \
+                   -d postgres
+        ```
+    * **IMPORTANTE:** Certifique-se de que `sua_senha_correta_do_postgres` seja a **mesma** que você colocou no `.env`.
+    * Se o contêiner já existir e você precisar resetá-lo ou mudar a senha:
+        ```bash
+        docker stop fullmotion-postgres
+        docker rm -f fullmotion-postgres
+        # Execute o comando `docker run` acima novamente
+        ```
+    * Para garantir que todos os volumes e caches antigos sejam limpos (usar com cautela, pois remove TUDO):
+        ```bash
+        docker system prune -a --volumes
+        # Depois execute o comando `docker run` para recriar o DB
+        ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+4.  **Instalar Dependências do Backend:**
+    ```bash
+    npm install
+    ```
 
-## Support
+5.  **Iniciar o Servidor Backend:**
+    ```bash
+    npm run start:dev
+    ```
+    O servidor estará disponível em `http://localhost:3000`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Teste da API (Postman / Insomnia)
 
-## Stay in touch
+Utilize uma ferramenta como Postman ou Insomnia para testar os endpoints da API.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+* **Login:** `POST http://localhost:3000/api/auth/login`
+* **Upload de Vídeo:** `POST http://localhost:3000/api/videos/upload` (multipart/form-data)
+* **Listar Vídeos:** `GET http://localhost:3000/api/videos`
+* **Solicitar Redefinição de Senha:** `POST http://localhost:3000/api/auth/forgot-password`
+* **Redefinir Senha:** `POST http://localhost:3000/api/auth/reset-password`
+* ... e outros endpoints para gerenciamento de usuários e agendamentos.
 
-## License
+## Estrutura do Projeto
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+fullmotion_backend/  
+├── src/  
+│   ├── auth/                     # Módulo de Autenticação (Login, JWT, Guards, Redefinição)  
+│   ├── users/                    # Módulo de Usuários (CRUD, Entidade User)  
+│   │   ├── dto/                  # DTOs para usuários  
+│   │   ├── user.entity.ts        # Definição da entidade User  
+│   │   └── ...  
+│   ├── appointments/             # Módulo de Agendamentos (se for expandir)  
+│   ├── videos/                   # Módulo de Vídeos (Upload, Gestão)  
+│   │   ├── dto/                  # DTOs para vídeos  
+│   │   ├── video.entity.ts       # Definição da entidade Video  
+│   │   └── ...  
+│   ├── mail-templates/           # Templates de e-mail (Pug)  
+│   │   └── reset-password.pug  
+│   ├── app.module.ts             # Módulo principal da aplicação  
+│   ├── main.ts                   # Ponto de entrada da aplicação  
+│   └── ...  
+├── uploads/                      # Pasta para arquivos de vídeo enviados localmente  
+├── .env.example                  # Exemplo de variáveis de ambiente  
+├── .env                          # Variáveis de ambiente locais (não versionado)  
+├── package.json  
+└── tsconfig.json  
+

@@ -1,84 +1,90 @@
-# Projeto_Fullmotion
+# Fullmotion - Frontend
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)  
-![React](https://img.shields.io/badge/react-%5E18.2.0-blue)  
-![TypeScript](https://img.shields.io/badge/typescript-%5E4.9.0-blue)  
-![Material UI](https://img.shields.io/badge/material--ui-%5E5.12.3-blueviolet)  
+![Tecnologias Frontend](https://img.shields.io/badge/frontend-ReactJS%20%7C%20MUI-blueviolet)
+![Status do Projeto](https://img.shields.io/badge/status-Em%20Desenvolvimento-blue)
 
 ---
 
-## Descrição
+## Sobre
 
-Projeto_Fullmotion é um sistema front-end para agendamento de consultas de fisioterapia, permitindo que fisioterapeutas gerenciem suas agendas e compartilhem vídeos de exercícios com pacientes. Construído em React com TypeScript, CSS Modules e Material UI, com navegação via React Router.
+Este é o projeto de frontend da plataforma **Fullmotion**, construído com ReactJS. Ele oferece a interface de usuário interativa que permite a pacientes, fisioterapeutas e administradores interagirem com o sistema.
 
----
+## Funcionalidades da Interface
+
+* **Páginas Públicas:**
+    * Site oficial da empresa.
+    * Página de agendamento da primeira avaliação.
+    * Página de Login.
+    * Páginas de "Esqueceu a Senha" e "Redefinir Senha".
+* **Dashboard por Perfil:**
+    * **Paciente:** Acesso a agendamento, histórico, pagamentos (placeholder) e visualização de "Meus Vídeos".
+    * **Fisioterapeuta:** Acesso a planilha de agendamentos (placeholder), e gerenciamento/visualização de todos os vídeos.
+    * **Admin:** Acesso a todas as funcionalidades do fisioterapeuta, além de gerenciamento de usuários, upload de vídeos e relatórios financeiros (placeholder).
+* **Gestão de Conteúdo de Vídeos:** Interface para upload, listagem, edição de permissões e deleção de vídeos.
+* **Design Responsivo:** Otimizado para telas de iPhone e iPad, garantindo uma boa experiência em dispositivos móveis e tablets.
 
 ## Tecnologias Utilizadas
 
-- React  
-- TypeScript  
-- CSS Modules  
-- Material UI  
-- React Router  
+* **ReactJS:** Biblioteca JavaScript para construção de interfaces de usuário.
+* **TypeScript:** Para tipagem estática e maior segurança no desenvolvimento.
+* **Material-UI (MUI):** Biblioteca de componentes para um design moderno e responsivo.
+* **React Router DOM:** Para gerenciamento de rotas e navegação na aplicação.
+* **Axios:** Cliente HTTP para comunicação com a API de backend.
+* **`jwt-decode`:** Para decodificar JWTs no cliente e extrair informações do usuário.
+* **CSS Modules:** Para encapsulamento de estilos específicos de componentes.
 
----
+## Configuração do Ambiente Local
 
-## Funcionalidades Principais
+### Pré-requisitos
 
-- Sistema de login para fisioterapeutas e pacientes  
-- Agendamento de consultas  
-- Upload e visualização de vídeos de exercícios  
-- Navegação dinâmica entre páginas com React Router  
-- Integração futura com pagamento via Pix (Mercado Pago)  
+Certifique-se de ter o Node.js (versão 18.x ou superior) e o npm (ou yarn) instalados.
 
----
+### Passos de Configuração
 
-## Como Rodar o Projeto Localmente
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/SEU_USUARIO/fullmotion.git](https://github.com/SEU_USUARIO/fullmotion.git)
+    cd fullmotion/frontend
+    ```
+    (Ajuste o caminho se seu repositório não for `fullmotion` ou se o frontend não estiver em `frontend/`)
 
-1. Clone o repositório:  
-   ```bash
-   git clone https://github.com/seu-usuario/Projeto_Fullmotion.git
+2.  **Instalar Dependências:**
+    ```bash
+    npm install
+    # ou
+    yarn install
+    ```
 
-2. Entre na pasta do projeto:
-   ```bash
-   cd Projeto_Fullmotion
+3.  **Iniciar o Servidor de Desenvolvimento:**
+    ```bash
+    npm run dev
+    # ou
+    yarn start
+    ```
+    O aplicativo estará disponível em `http://localhost:5173` (ou outra porta, verifique o console).
 
-3. Instale as dependências:
-   ```bash
-   npm install
+## Estrutura do Projeto
 
-4. Rode o projeto:
-   ```bash
-   npm start
-
-## Estrutura de Pastas
-
-Projeto_Fullmotion/  
-├── public/                  # Arquivos públicos estáticos  
-├── src/                     # Código-fonte React  
-│   ├── assets/              # Imagens e arquivos estáticos  
-│   ├── components/          # Componentes reutilizáveis  
-│   ├── pages/               # Páginas do sistema   
-│   ├── App.tsx              # Componente principal  
-│   ├── index.css            # Estilos globais   
-│   ├── main.tsx             # Ponto de entrada da aplicação  
-│   └── vite-env.d.ts        # Tipagens globais do Vite   
-├── .gitignore               # Arquivos e pastas ignorados pelo Git  
-├── eslint.config.js         # Configuração do ESLint  
-├── index.html               # HTML principal do projeto  
-├── package-lock.json        # Lockfile do npm  
-├── package.json             # Dependências e scripts  
-├── README.md                # Documentação do projeto  
-├── tsconfig.app.json        # Configuração TypeScript para app  
-├── tsconfig.json            # Configuração principal do TypeScript  
-├── tsconfig.node.json       # Configuração TypeScript para Node  
-├── vite.config.ts           # Configuração do Vite  
-
-## Status do Projeto
-
-:construction: Em desenvolvimento
-
-## Contato
-
-E-mail: marcelo.oliveira.256@gmail.com  
-LinkedIn: https://www.linkedin.com/in/marcelo-silvaoli/  
+fullmotion_frontend/  
+├── public/                       # Arquivos estáticos  
+├── src/  
+│   ├── assets/                   # Imagens, ícones, etc.  
+│   ├── components/               # Componentes reutilizáveis (Header, Footer, PrivateRoute, AdminRoute, AuthRoleRoute)  
+│   ├── context/                  # Context API (AuthContext para autenticação)  
+│   │   └── AuthContext.tsx   
+│   ├── pages/                    # Páginas da aplicação  
+│   │   ├── AgendarAvaliacao/     # Página de agendamento de primeira avaliação  
+│   │   ├── Dashboard/            # Dashboard principal por perfil (paciente, fisioterapeuta, admin)  
+│   │   ├── EsqueceuSenha/        # Página para solicitar redefinição de senha  
+│   │   ├── Login/                # Página de login  
+│   │   ├── PatientVideos/        # Página para pacientes visualizarem seus vídeos  
+│   │   ├── ResetPassword/        # Página para redefinir senha com token  
+│   │   ├── UploadVideo/          # Página para Admin fazer upload de vídeos  
+│   │   ├── UserManagement/       # Página para Admin gerenciar usuários  
+│   │   ├── VideoManagement/      # Página para Fisioterapeuta/Admin gerenciar vídeos  
+│   │   └── ...  
+│   ├── App.tsx                   # Componente principal e rotas  
+│   ├── index.css                 # Estilos globais  
+│   └── main.tsx                  # Ponto de entrada do React  
+├── package.json  
+└── tsconfig.json  

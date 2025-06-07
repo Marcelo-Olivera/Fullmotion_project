@@ -1,58 +1,107 @@
+/* src/pages/Dashboard.module.css */
+
 .dashboardContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: calc(100vh - var(--header-height, 60px) - var(--footer-height, 60px)); /* Ajusta para Header/Footer */
-    background-color: #1c1e22;
-    color: #49c5b6;
+    background-color: #1c1e22; /* Cor de fundo do dashboard */
+    color: #f0f0f0; /* Cor do texto geral, para contrastar com o background escuro */
     font-family: Arial, sans-serif;
     text-align: center;
     padding: 20px;
+    box-sizing: border-box; /* Garante que padding não adicione largura extra */
 }
 
 .dashboardContainer h1 {
-    color: #49c5b6;
+    color: #49c5b6; /* Cor primária para títulos */
     margin-bottom: 15px;
+    font-size: 2.5em; /* Título maior */
 }
 
 .dashboardContainer p {
     font-size: 1.1em;
     line-height: 1.6;
-    margin-bottom: 20px; /* Adiciona espaçamento abaixo do parágrafo */
+    margin-bottom: 20px;
+    color: #ccc; /* Cor um pouco mais suave para parágrafos */
+    max-width: 800px; /* Limita a largura do parágrafo para melhor leitura */
 }
 
-.dashboardNav {
+
+
+/* Estilos para o GRID e o CARD de "Meus Vídeos", "Gerenciar vídeos" e "Gerenciar usuários" */
+
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajusta o número de colunas automaticamente */
+    justify-content: center; /* Centraliza o item se ele não ocupar toda a largura */
+    gap: 25px; /* Espaço entre cards, mesmo que só tenha um */
+    margin-top: 30px;
+    width: 100%; /* Ocupa toda a largura do container */
+    max-width: 1200px; /* Limita a largura máxima do grid/card */
+    margin-left: auto; /* Centraliza o grid */
+    margin-right: auto; /* Centraliza o grid */
+}
+
+.dashboardCard {
+    background-color: #2a2c33; /* Um pouco mais claro que o background do container para destaque */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Sombra mais pronunciada para profundidade */
+    padding: 35px;
+    text-decoration: none;
+    color: #f0f0f0; /* Cor do texto geral dentro do card */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
     display: flex;
-    gap: 20px; /* Espaço entre os links/botões */
-    margin-top: 30px; /* Espaço acima da navegação */
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente o conteúdo do card */
+    align-items: center; /* Centraliza horizontalmente o conteúdo do card */
+    min-height: 220px; /* Aumenta a altura mínima para o card */
+    width: 100%; /* Garante que o card ocupe a largura do grid */
+    box-sizing: border-box;
+    cursor: pointer; /* Indica que é clicável */
 }
 
-.navLink, .logoutBtn {
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none; /* Para links */
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Transição suave no hover */
-    border: none; /* Para o botão */
-    font-size: 1em; /* Garante tamanho de fonte consistente */
+.dashboardCard:hover {
+    transform: translateY(-10px); /* Movimento mais pronunciado */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6); /* Sombra mais forte no hover */
+    background-color: #35373f; /* Um tom um pouco mais claro no hover */
 }
 
-.navLink {
-    background-color: #49c5b6; /* Azul primário */
-    color: white;
+.dashboardCard h3 {
+    color: #49c5b6; /* Cor primária para o título do card */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 2em; /* Título do card maior */
+    letter-spacing: 1px; /* Espaçamento entre letras */
 }
 
-.navLink:hover {
-    background-color: #37a094; /* Azul mais escuro no hover */
+.dashboardCard p {
+    font-size: 1.2em; /* Parágrafo do card um pouco maior */
+    color: #ddd; /* Cor mais clara para o parágrafo do card */
+    margin-bottom: 0; /* Remove margem inferior se for o último elemento */
 }
 
-.logoutBtn {
-    background-color: #dc3545; /* Vermelho para logout */
-    color: white;
-}
+/* Responsividade básica para telas menores */
+@media (max-width: 768px) {
+    .dashboardContainer {
+        padding: 15px;
+    }
 
-.logoutBtn:hover {
-    background-color: #c82333; /* Vermelho mais escuro no hover */
+    .dashboardContainer h1 {
+        font-size: 2em;
+    }
+
+    .dashboardCard {
+        padding: 25px;
+        min-height: 180px;
+    }
+
+    .dashboardCard h3 {
+        font-size: 1.8em;
+    }
+
+    .dashboardCard p {
+        font-size: 1.1em;
+    }
 }
