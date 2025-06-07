@@ -27,11 +27,9 @@ A plataforma é dividida em módulos que atendem a diferentes perfis de usuário
 
 * **Gestão de Vídeos:** Upload (apenas Admin), listagem completa, edição de metadados e status de acesso (privado, público, pacientes específicos).
 * **Liberação de Conteúdo:** Fisioterapeutas podem liberar vídeos de exercícios para pacientes específicos.
-* **Gerenciamento de Agendamentos:** Módulo de backend para registro e status de consultas (pronto para integração com automação externa como WhatsApp).
 
 ### Módulos para Pacientes:
 
-* **Agendamento de Avaliações:** Página para agendamento da primeira avaliação (com informações pessoais).
 * **Visualização de Vídeos:** Pacientes podem acessar e reproduzir apenas os vídeos de exercícios que foram liberados para eles.
 
 ## Tecnologias Utilizadas

@@ -21,7 +21,6 @@ A API RESTful oferece endpoints para:
     * Visualização de vídeos liberados (Paciente).
     * Atualização de metadados e status de acesso (Privado, Público para Pacientes, Pacientes Específicos).
     * Deleção de vídeos (apenas Admin).
-* **Agendamentos:** Criação, listagem e atualização de agendamentos (pronto para integração via automação externa).
 
 ## Tecnologias Utilizadas
 

@@ -13,13 +13,13 @@ Este é o projeto de frontend da plataforma **Fullmotion**, construído com Reac
 
 * **Páginas Públicas:**
     * Site oficial da empresa.
-    * Página de agendamento da primeira avaliação.
     * Página de Login.
     * Páginas de "Esqueceu a Senha" e "Redefinir Senha".
 * **Dashboard por Perfil:**
-    * **Paciente:** Acesso a agendamento, histórico, pagamentos (placeholder) e visualização de "Meus Vídeos".
-    * **Fisioterapeuta:** Acesso a planilha de agendamentos (placeholder), e gerenciamento/visualização de todos os vídeos.
-    * **Admin:** Acesso a todas as funcionalidades do fisioterapeuta, além de gerenciamento de usuários, upload de vídeos e relatórios financeiros (placeholder).
+    * **Paciente:** visualização de "Meus Vídeos".
+    * **Fisioterapeuta:** visualização de todos os vídeos.
+    * **Admin:** Acesso a todas as funcionalidades do fisioterapeuta, além de gerenciamento de usuários e upload de vídeos.
+    
 * **Gestão de Conteúdo de Vídeos:** Interface para upload, listagem, edição de permissões e deleção de vídeos.
 * **Design Responsivo:** Otimizado para telas de iPhone e iPad, garantindo uma boa experiência em dispositivos móveis e tablets.
 
