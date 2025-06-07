@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { IoMenuOutline } from "react-icons/io5";
 import { RiLoginCircleFill } from "react-icons/ri";
-import { AiFillSchedule } from "react-icons/ai";
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import gsap from "gsap";
@@ -82,13 +81,6 @@ function Header() {
               </div>
             </Link>
           )}
-
-          <Link className={styles.link} to="/agendar" onClick={() => setDrawerOpen(false)}>
-            <div className={styles.container}>
-              <AiFillSchedule size={32} />
-              <p>Agendar Avaliação</p>
-            </div>
-          </Link>
 
           {isAuthenticated && (
               <Link className={styles.link} to="/dashboard" onClick={() => setDrawerOpen(false)}>

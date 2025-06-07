@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import './index.css';
 import Header from "./components/Header";
 import Inicio from "./pages/Inicio";
-import AgendarAvaliacao from "./pages/AgendarAvaliacao";
 import Login from "./pages/Login";
 import Footer from "./components/Footer";
 import Dashboard from "./pages/Dashboard";
@@ -61,7 +60,6 @@ function App() {
           <Routes>
             <Route path="/" element={<HomeConditionalRedirect />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/agendar" element={<AgendarAvaliacao />} />
             <Route path="/forgot-password" element={<EsqueceuSenha />} />
 
             <Route
