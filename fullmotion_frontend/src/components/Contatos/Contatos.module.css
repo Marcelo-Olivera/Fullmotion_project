@@ -1,12 +1,49 @@
+/* src/components/Contatos/Contatos.module.css */
+
 .contatos{
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* A seção principal (título em cima, cards embaixo) continua em coluna */
     margin: 3rem 0;
+    padding: 3rem; /* <--- Adicione padding para dar "ar" na seção */
+    color: #f0f0f0; /* <--- Cor do texto padrão para a seção */
 }
 
 .contatosCards{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    /* NOVO: Propriedades para CSS Grid Responsivo */
+    display: grid; /* <--- Muda para Grid */
+    /* grid-template-columns: Cria colunas que se ajustam.
+       - repeat(auto-fit, ...): Cria o máximo de colunas que couberem.
+       - minmax(300px, 1fr): Cada coluna terá no mínimo 300px de largura e no máximo 1 fração do espaço disponível.
+         Isso fará com que os cards se organizem em 1 ou 2 colunas, dependendo da largura da tela. */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 20px; /* <--- Espaçamento entre os cards */
+    justify-items: center; /* Centraliza os cards dentro das suas células do grid */
+    align-items: stretch; /* Faz os cards terem a mesma altura na linha */
+    max-width: 1200px; /* Limita a largura máxima do grid de cards */
+    margin: 0 auto; /* Centraliza o grid de cards na página */
+    width: 100%; /* Ocupa 100% da largura do pai */
 }
 
+/* NOVO: Media Queries para o grid de cards de contato */
+
+/* Para telas menores ou iguais a 900px (tablets em retrato, iPads) */
+@media (max-width: 900px) {
+    .contatos {
+        padding: 2rem 1.5rem; /* Reduz o padding geral da seção */
+    }
+    .contatosCards {
+        gap: 15px; /* Ajusta espaçamento */
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Permite cards um pouco menores */
+    }
+}
+
+/* Para telas menores ou iguais a 600px (smartphones, iPhones) */
+@media (max-width: 600px) {
+    .contatos {
+        padding: 1.5rem 1rem; /* Reduz o padding ainda mais para celulares */
+    }
+    .contatosCards {
+        gap: 15px;
+        grid-template-columns: 1fr; /* <--- Um card por linha em celulares */
+    }
+}

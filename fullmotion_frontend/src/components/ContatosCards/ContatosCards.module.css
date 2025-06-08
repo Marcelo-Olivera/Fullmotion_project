@@ -17,6 +17,8 @@
     padding-right: 1rem;
     /*background-color: #100F0D;
     box-shadow: 0px 0px 5px rgba(73, 197, 183, 0.5);*/
+    width: 100%; /* Garante que o container ocupe 100% da largura do pai */
+    box-sizing: border-box; /* Garante que o padding não afete a largura total */
 }
 
 .contatosContainer p{

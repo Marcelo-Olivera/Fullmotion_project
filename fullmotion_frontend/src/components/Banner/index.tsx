@@ -20,6 +20,22 @@ function Banner() {
       autoplay: true,
       autoplaySpeed: 3000,
       arrows: false,
+      responsive: [
+        {
+          breakpoint: 768, // Para telas menores que 768px (tablets e celulares)
+          settings: {
+            arrows: false, // Garante que as setas não apareçam em mobile
+            dots: true,
+          }
+        },
+        {
+          breakpoint: 480, // Para telas menores que 480px (celulares muito pequenos)
+          settings: {
+            arrows: false,
+            dots: true,
+          }
+        }
+      ]
     };
   
     return (

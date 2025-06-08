@@ -32,3 +32,48 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+
+/* --- Media Queries para Responsividade --- */
+
+/* Para telas menores ou iguais a 900px (tablets em retrato, iPads - breakpoint 'md') */
+@media (max-width: 900px) {
+    .containerTexto {
+        padding: 0 1rem; /* Reduz o padding lateral para tablets */
+    }
+
+    .containerTexto h1 {
+        font-size: 2rem; /* Reduz o tamanho do H1 para tablets */
+    }
+
+    .titulo {
+        font-size: 1.2rem; /* Reduz o tamanho do título secundário para tablets */
+    }
+}
+
+/* Para telas menores ou iguais a 600px (smartphones, iPhones - breakpoint 'sm' e 'xs') */
+@media (max-width: 600px) {
+    .containerTexto {
+        padding: 0 1rem; /* Reduz ainda mais o padding lateral para celulares */
+    }
+    /* Para centralizar o h1 e o span.titulo individualmente */
+    .containerTexto h1,
+    .tituloContainer {
+        width: 100%; /* Ocupa a largura total para centralizar */
+    }
+
+
+    .containerTexto h1 {
+        font-size: 1.7rem; /* Reduz ainda mais o H1 para celulares */
+    }
+
+    .titulo {
+        font-size: 1rem; /* Reduz ainda mais o título secundário para celulares */
+    }
+
+    .borda {
+        width: 25%; /* Ajusta a largura da borda em telas muito pequenas */
+        margin-top: 0.5rem; /* Menor margem */
+        margin-bottom: 0.5rem;
+    }
+}

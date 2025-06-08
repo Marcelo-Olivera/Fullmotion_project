@@ -1,8 +1,8 @@
 // src/pages/VideoManagement/index.tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // <--- Importe useNavigate aqui!
-import { // Mantenha todas as importações existentes do Material-UI
+import { useNavigate } from 'react-router-dom';
+import {
   Container,
   Typography,
   Box,
@@ -33,8 +33,9 @@ import { // Mantenha todas as importações existentes do Material-UI
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'; // <--- Importe o ícone de upload
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useAuth } from '../../context/AuthContext';
+
 
 // Definição do enum UserRole - MANTENHA AQUI se não for importado de outro lugar
 enum UserRole {
@@ -49,7 +50,7 @@ interface Video {
   title: string;
   description?: string;
   filename: string;
-  filePath: string; // Ex: /uploads/videos/nome-do-video.mp4
+  filePath: string;
   mimeType: string;
   size: number;
   uploadedByUserId: string;
@@ -62,19 +63,17 @@ interface Video {
 interface Patient {
   id: string;
   email: string;
-  // outras propriedades do paciente que você queira exibir (ex: name)
 }
 
 const VideoManagementPage: React.FC = () => {
-  const { user } = useAuth(); // Obter o objeto do usuário logado
-  const navigate = useNavigate(); // <--- Inicialize useNavigate aqui!
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const [videos, setVideos] = useState<Video[]>([]);
-  const [patients, setPatients] = useState<Patient[]>([]); // Para listar pacientes ao liberar vídeo
+  const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
-  // Estados para o modal de edição
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [currentVideo, setCurrentVideo] = useState<Video | null>(null);
   const [editedTitle, setEditedTitle] = useState('');
@@ -82,7 +81,6 @@ const VideoManagementPage: React.FC = () => {
   const [editedAccessStatus, setEditedAccessStatus] = useState<'Privado' | 'Público para Pacientes' | 'Pacientes Específicos'>('Privado');
   const [selectedPatientIds, setSelectedPatientIds] = useState<string[]>([]);
 
-  // Função para buscar vídeos
   const fetchVideos = useCallback(async () => {
     setLoading(true);
     setMessage(null);
@@ -109,25 +107,23 @@ const VideoManagementPage: React.FC = () => {
     }
   }, []);
 
-  // Função para buscar pacientes (apenas para Admin)
   const fetchPatients = useCallback(async () => {
     try {
       const token = localStorage.getItem('access_token');
       if (!token) {
-        return; // Ou lançar um erro, dependendo da robustez que você quer
+        return;
       }
       const response = await axios.get('http://localhost:3000/api/users', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-      setPatients(response.data.filter((p: any) => p.role === UserRole.PATIENT)); // Filtra apenas pacientes
+      setPatients(response.data.filter((p: any) => p.role === UserRole.PATIENT));
     } catch (error) {
       console.error('Erro ao buscar pacientes:', error);
     }
   }, []);
 
-  // Efeito para carregar vídeos e pacientes (se for admin) ao montar o componente
   useEffect(() => {
     fetchVideos();
     if (user?.role === UserRole.ADMIN) {
@@ -135,7 +131,6 @@ const VideoManagementPage: React.FC = () => {
     }
   }, [fetchVideos, fetchPatients, user]);
 
-  // Função para abrir o modal de edição
   const handleEditClick = (video: Video) => {
     setCurrentVideo(video);
     setEditedTitle(video.title);
@@ -145,19 +140,17 @@ const VideoManagementPage: React.FC = () => {
     setEditModalOpen(true);
   };
 
-  // Função para fechar o modal de edição
   const handleEditModalClose = () => {
     setEditModalOpen(false);
     setCurrentVideo(null);
-    setMessage(null); // Limpa mensagens anteriores no modal
+    setMessage(null);
   };
 
-  // Função para lidar com a atualização do vídeo
   const handleUpdateVideo = async () => {
     if (!currentVideo) return;
 
     setLoading(true);
-    setMessage(null); // Limpa mensagens da página principal
+    setMessage(null);
 
     const updateData = {
       title: editedTitle,
@@ -182,8 +175,8 @@ const VideoManagementPage: React.FC = () => {
       });
 
       setMessage({ type: 'success', text: `Vídeo "${response.data.title}" atualizado com sucesso!` });
-      fetchVideos(); // Recarregar a lista de vídeos
-      handleEditModalClose(); // Fechar o modal
+      fetchVideos();
+      handleEditModalClose();
     } catch (error: any) {
       console.error('Erro ao atualizar vídeo:', error);
       const errorMessage = error.response?.data?.message || 'Falha ao atualizar vídeo.';
@@ -193,14 +186,13 @@ const VideoManagementPage: React.FC = () => {
     }
   };
 
-  // Função para lidar com a exclusão do vídeo
   const handleDeleteVideo = async (videoId: string) => {
     if (!window.confirm('Tem certeza que deseja deletar este vídeo?')) {
       return;
     }
 
     setLoading(true);
-    setMessage(null); // Limpa mensagens da página principal
+    setMessage(null);
 
     try {
       const token = localStorage.getItem('access_token');
@@ -217,7 +209,7 @@ const VideoManagementPage: React.FC = () => {
       });
 
       setMessage({ type: 'success', text: 'Vídeo deletado com sucesso!' });
-      fetchVideos(); // Recarregar a lista de vídeos
+      fetchVideos();
     } catch (error: any) {
       console.error('Erro ao deletar vídeo:', error);
       const errorMessage = error.response?.data?.message || 'Falha ao deletar vídeo.';
@@ -227,22 +219,20 @@ const VideoManagementPage: React.FC = () => {
     }
   };
 
-
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      {/* Box para organizar o título e o botão de upload */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" component="h1" gutterBottom>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4, px: { xs: 1, sm: 2, md: 3 } }}> {/* Adicionado padding responsivo */}
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3} sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: 2, sm: 0 } }}> {/* Ajustado para empilhar em mobile */}
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' } }}>
           Gerenciamento de Vídeos
         </Typography>
 
-        {/* Botão de Upload visível apenas para ADMIN */}
         {user?.role === UserRole.ADMIN && (
           <Button
             variant="contained"
             color="primary"
-            startIcon={<CloudUploadIcon />} // Ícone de upload
-            onClick={() => navigate('/admin/upload-video')} // Redireciona para a página de upload
+            startIcon={<CloudUploadIcon />}
+            onClick={() => navigate('/admin/upload-video')}
+            sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem' }, py: { xs: 1, sm: 1.5 } }} 
           >
             Upload Novo Vídeo
           </Button>
@@ -263,49 +253,49 @@ const VideoManagementPage: React.FC = () => {
         <Alert severity="info">Nenhum vídeo encontrado. Faça upload de um vídeo primeiro.</Alert>
       ) : (
         <Paper elevation={3}>
-          <TableContainer>
-            <Table aria-label="tabela de vídeos">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Título</TableCell>
-                  <TableCell>Descrição</TableCell>
-                  <TableCell>Status de Acesso</TableCell>
-                  <TableCell>Ações</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {videos.map((video) => (
-                  <TableRow key={video.id}>
-                    <TableCell>{video.title}</TableCell>
-                    <TableCell>{video.description || 'N/A'}</TableCell>
-                    <TableCell>{video.accessStatus}</TableCell>
-                    <TableCell>
-                      {/* Botão para reproduzir/abrir vídeo */}
-                      <IconButton color="primary" onClick={() => window.open(`http://localhost:3000${video.filePath}`, '_blank')}>
-                        <PlayArrowIcon />
-                      </IconButton>
-                      {/* Botão para editar vídeo */}
-                      <IconButton color="primary" onClick={() => handleEditClick(video)}>
-                        <EditIcon />
-                      </IconButton>
-                      {/* Botão de deletar visível apenas para Admin */}
-                      {user?.role === UserRole.ADMIN && (
-                        <IconButton color="error" onClick={() => handleDeleteVideo(video.id)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      )}
-                    </TableCell>
+          {/* Box com overflow-x para rolagem horizontal da tabela */}
+          <Box sx={{ overflowX: 'auto' }}>
+            <TableContainer>
+              <Table aria-label="tabela de vídeos" sx={{ minWidth: 650 }}> {/* minWidth para garantir a rolagem */}
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Título</TableCell>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Descrição</TableCell>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Status de Acesso</TableCell>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Ações</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {videos.map((video) => (
+                    <TableRow key={video.id}>
+                      <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>{video.title}</TableCell>
+                      <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>{video.description || 'N/A'}</TableCell>
+                      <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>{video.accessStatus}</TableCell>
+                      <TableCell sx={{ whiteSpace: 'nowrap' }}> {/* Garante que os botões não quebrem linha */}
+                        <IconButton color="primary" size="small" onClick={() => window.open(`http://localhost:3000${video.filePath}`, '_blank')}>
+                          <PlayArrowIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
+                        </IconButton>
+                        <IconButton color="primary" size="small" onClick={() => handleEditClick(video)}>
+                          <EditIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
+                        </IconButton>
+                        {user?.role === UserRole.ADMIN && (
+                          <IconButton color="error" size="small" onClick={() => handleDeleteVideo(video.id)}>
+                            <DeleteIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} />
+                          </IconButton>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </Paper>
       )}
 
-      {/* Modal de Edição de Vídeo */}
+      {/* Modal de Edição de Vídeo (ajustes de fonte e padding também) */}
       <Dialog open={editModalOpen} onClose={handleEditModalClose} fullWidth maxWidth="sm">
-        <DialogTitle>Editar Vídeo</DialogTitle>
+        <DialogTitle sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }}>Editar Vídeo</DialogTitle>
         <DialogContent>
           {currentVideo && (
             <Box component="form" sx={{ mt: 2 }}>
@@ -316,6 +306,7 @@ const VideoManagementPage: React.FC = () => {
                 margin="normal"
                 value={editedTitle}
                 onChange={(e) => setEditedTitle(e.target.value)}
+                sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
               />
               <TextField
                 label="Descrição"
@@ -326,25 +317,27 @@ const VideoManagementPage: React.FC = () => {
                 rows={3}
                 value={editedDescription}
                 onChange={(e) => setEditedDescription(e.target.value)}
+                sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
               />
               <FormControl fullWidth margin="normal">
-                <InputLabel id="edit-access-status-label">Status de Acesso</InputLabel>
+                <InputLabel id="edit-access-status-label" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Status de Acesso</InputLabel>
                 <Select
                   labelId="edit-access-status-label"
                   id="edit-access-status"
                   value={editedAccessStatus}
                   label="Status de Acesso"
                   onChange={(e) => setEditedAccessStatus(e.target.value as 'Privado' | 'Público para Pacientes' | 'Pacientes Específicos')}
+                  sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
                 >
-                  <MenuItem value="Privado">Privado</MenuItem>
-                  <MenuItem value="Público para Pacientes">Público para Pacientes</MenuItem>
-                  <MenuItem value="Pacientes Específicos">Pacientes Específicos</MenuItem>
+                  <MenuItem value="Privado" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Privado</MenuItem>
+                  <MenuItem value="Público para Pacientes" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Público para Pacientes</MenuItem>
+                  <MenuItem value="Pacientes Específicos" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Pacientes Específicos</MenuItem>
                 </Select>
               </FormControl>
 
               {editedAccessStatus === 'Pacientes Específicos' && (
                 <FormControl fullWidth margin="normal">
-                  <InputLabel id="select-patients-label">Liberar para Pacientes</InputLabel>
+                  <InputLabel id="select-patients-label" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Liberar para Pacientes</InputLabel>
                   <Select
                     labelId="select-patients-label"
                     id="select-patients"
@@ -356,9 +349,10 @@ const VideoManagementPage: React.FC = () => {
                       .map(id => patients.find(p => p.id === id)?.email || id)
                       .join(', ')
                     }
+                    sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
                   >
                     {patients.map((patient) => (
-                      <MenuItem key={patient.id} value={patient.id}>
+                      <MenuItem key={patient.id} value={patient.id} sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>
                         <Checkbox checked={selectedPatientIds.indexOf(patient.id) > -1} />
                         <ListItemText primary={patient.email} />
                       </MenuItem>
@@ -370,10 +364,10 @@ const VideoManagementPage: React.FC = () => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleEditModalClose} color="secondary">
+          <Button onClick={handleEditModalClose} color="secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem' } }}>
             Cancelar
           </Button>
-          <Button onClick={handleUpdateVideo} color="primary" disabled={loading}>
+          <Button onClick={handleUpdateVideo} color="primary" disabled={loading} sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem' } }}>
             {loading ? <CircularProgress size={24} color="inherit" /> : 'Salvar Alterações'}
           </Button>
         </DialogActions>
@@ -383,3 +377,6 @@ const VideoManagementPage: React.FC = () => {
 };
 
 export default VideoManagementPage;
+
+
+/**/ 

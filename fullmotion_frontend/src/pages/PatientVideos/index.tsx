@@ -7,6 +7,7 @@ import {
   Box,
   Alert,
   CircularProgress,
+  // Paper, // Não é usado diretamente para o layout principal do grid
   Grid,
   Card,
   CardMedia,
@@ -34,7 +35,7 @@ interface Video {
 }
 
 const PatientVideosPage: React.FC = () => {
-  const { isAuthenticated } = useAuth(); 
+  const { isAuthenticated } = useAuth();
   const [videos, setVideos] = useState<Video[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -76,8 +77,20 @@ const PatientVideosPage: React.FC = () => {
 
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4, height: '70vh' }}>
-      <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ color: '#49c5b6', marginBottom: 8 }}>
+    // Removido 'height: 70vh' do Container para que a altura seja fluida.
+    // Adicionado padding responsivo.
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4, px: { xs: 1, sm: 2, md: 3 } }}>
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        align="center"
+        sx={{
+          color: '#49c5b6',
+          marginBottom: { xs: 4, md: 8 }, // Margem inferior responsiva
+          fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }, // Tamanho de fonte responsivo
+        }}
+      >
         Meus Vídeos de Exercícios
       </Typography>
 
@@ -94,36 +107,53 @@ const PatientVideosPage: React.FC = () => {
       ) : videos.length === 0 ? (
         <Alert severity="info">Nenhum vídeo liberado para você ainda. Aguarde a liberação do seu fisioterapeuta.</Alert>
       ) : (
-
-          <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
-            {videos.map((video) => (
-              <Grid item xs={12} sm={6} md={4} key={video.id}>
-                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <CardMedia
-                    component="video"
-                    src={`http://localhost:3000${video.filePath}`}
-                    title={video.title}
-                    controls
-                    sx={{ height: 200 }}
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {video.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {video.description || 'Sem descrição.'}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary" onClick={() => window.open(`http://localhost:3000${video.filePath}`, '_blank')}>
-                      <PlayArrowIcon sx={{ mr: 0.5 }} /> Assistir em Tela Cheia
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        // </Paper> // <-- E a tag de fechamento aqui
+        <Grid container spacing={3} justifyContent="center">
+          {videos.map((video) => (
+            <Grid item xs={12} sm={6} md={4} key={video.id}>
+              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardMedia
+                  component="video"
+                  src={`http://localhost:3000${video.filePath}`}
+                  title={video.title}
+                  controls
+                  // Ajustado a altura do player de vídeo para ser responsiva
+                  sx={{
+                    height: { xs: 180, sm: 200, md: 220 }, // Altura ajustada para mobile/tablet/desktop
+                    width: '100%', // Garante que ocupe a largura total do card
+                    objectFit: 'cover', // Para que o vídeo preencha o espaço sem distorcer
+                  }}
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography
+                    gutterBottom
+                    variant="h5"
+                    component="h2"
+                    sx={{ fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.5rem' } }} // Tamanho do título do card responsivo
+                  >
+                    {video.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontSize: { xs: '0.85rem', sm: '0.95rem', md: '1rem' } }} // Tamanho da descrição do card responsivo
+                  >
+                    {video.description || 'Sem descrição.'}
+                  </Typography>
+                </CardContent>
+                <CardActions sx={{ justifyContent: 'flex-end' }}>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => window.open(`http://localhost:3000${video.filePath}`, '_blank')}
+                    sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem', md: '0.9rem' } }} // Tamanho do texto do botão responsivo
+                  >
+                    <PlayArrowIcon sx={{ mr: 0.5, fontSize: { xs: '1rem', sm: '1.2rem', md: '1.3rem' } }} /> Assistir em Tela Cheia
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       )}
     </Container>
   );

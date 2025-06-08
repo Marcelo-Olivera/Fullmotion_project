@@ -1,19 +1,44 @@
-.slide {
-    max-width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-    z-index: 1;
-  }
-  
-  .bannerImage {
+/* src/components/Banner/Banner.module.css */
+
+.sliderContainer { /* Este é o div que envolve o Slider no seu index.tsx */
     width: 100%;
-    height: auto;
+    overflow: hidden;
+    /* Adicione uma altura mínima ou máxima aqui se o banner tiver que ter um tamanho específico */
+    /* Por exemplo, para controlar a altura em mobile */
+}
+
+.slide {
+    /* Estas propriedades são boas. display: flex e alinhamento ajudam a centralizar o conteúdo da imagem */
+    display: flex !important; /* !important para garantir que sobrescreva estilos inline do react-slick */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto; /* A altura do slide deve ser flexível com a imagem */
+    overflow: hidden;
+    z-index: 1; /* Mantém sua ordem de empilhamento se precisar */
+}
+
+.bannerImage {
+    width: 100%; /* A imagem deve sempre ocupar 100% da largura disponível no slide */
+    height: auto; /* Mantenha 'auto' para preservar a proporção da imagem */
+    display: block; /* Evita espaço indesejado abaixo da imagem */
     border-radius: 10px;
-  }
-  
-  :global(.slick-dots) {
+    
+    /* CRÍTICO PARA RESPONSIVIDADE: object-fit */
+    /* 'cover' fará a imagem cobrir o espaço do container, cortando partes se necessário */
+    /* 'contain' fará a imagem se ajustar inteira, mas pode deixar barras laterais/superiores */
+    /* Escolha o que se adequa melhor ao seu design. 'cover' é mais comum para banners. */
+    object-fit: cover; 
+    object-position: center; /* Centraliza a imagem dentro da área de recorte */
+
+    /* NOVA: Definir uma altura máxima para controlar o tamanho em telas menores */
+    max-height: 600px; /* Altura máxima para telas maiores (desktop) */
+}
+
+/* Estilos para os Dots de Navegação (slick-dots) */
+:global(.slick-dots) {
     position: absolute;
-    bottom: 50px; /* Ajusta a altura dentro da imagem */
+    bottom: 20px; /* Ajuste a distância da parte inferior */
     left: 50%;
     transform: translateX(-50%);
     display: flex !important;
@@ -21,20 +46,48 @@
     list-style: none;
     padding: 0;
     margin: 0;
-  }
+}
   
-  :global(.slick-dots li) {
-    margin: 0 5px !important; /* Espaçamento entre os dots */
-  }
+:global(.slick-dots li) {
+    margin: 0 5px !important;
+}
   
-  :global(.slick-dots li button:before) {
-    font-size: 12px !important; /* Tamanho das bolinhas */
-    color: white !important; /* Cor padrão */
+:global(.slick-dots li button:before) {
+    font-size: 12px !important;
+    color: white !important;
     opacity: 0.5 !important;
     transition: all 0.3s ease-in-out;
-  }
+}
   
-  :global(.slick-dots li.slick-active button:before) {
-    color: #49c5b6 !important; /* Cor da bolinha ativa */
+:global(.slick-dots li.slick-active button:before) {
+    color: #49c5b6 !important;
     opacity: 1 !important;
-  }
+}
+
+/* NOVO: Media Queries para Ajustar a Altura do Banner e Dots em Dispositivos Móveis */
+
+/* Para telas menores que 768px (tablets em retrato, iPads pequenos, iPhones em paisagem) */
+@media (max-width: 768px) {
+    .bannerImage {
+        /* Reduz a altura máxima para que o banner não ocupe demais na tela do celular */
+        max-height: 300px; /* Exemplo: um banner menor para mobile */
+    }
+    :global(.slick-dots) {
+        bottom: 10px; /* Aproxima os dots da borda inferior em telas menores */
+    }
+}
+
+/* Para telas menores que 480px (smartphones menores, iPhones em retrato) */
+@media (max-width: 480px) {
+    .bannerImage {
+        /* Pode reduzir ainda mais para celulares menores */
+        max-height: 200px; 
+    }
+    :global(.slick-dots) {
+        bottom: 5px; /* Mais perto da borda inferior */
+        font-size: 10px !important; /* Se o texto dos dots for muito grande */
+    }
+    :global(.slick-dots li button:before) {
+      font-size: 10px !important; /* Garante que as bolinhas sejam menores */
+    }
+}

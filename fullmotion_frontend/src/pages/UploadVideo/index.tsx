@@ -1,3 +1,4 @@
+// src/pages/UploadVideo/index.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import {
@@ -61,8 +62,6 @@ const UploadVideoPage: React.FC = () => {
     formData.append('accessStatus', accessStatus);
 
     try {
-      // **IMPORTANTE**: Obtenha o token JWT do admin logado.
-      // Ajuste esta linha conforme onde você armazena seu token (ex: localStorage, Context API, Redux).
       const token = localStorage.getItem('access_token');
       if (!token) {
         setMessage({ type: 'error', text: 'Você não está autenticado. Faça login como admin.' });
@@ -83,7 +82,6 @@ const UploadVideoPage: React.FC = () => {
       setDescription('');
       setSelectedFile(null);
       setAccessStatus(VideoAccessStatus.PRIVATE);
-      // Para limpar o input de arquivo, você pode precisar de um ref ou redefinir o valor:
       const fileInput = document.getElementById('video-upload-button') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
 
@@ -97,11 +95,32 @@ const UploadVideoPage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }} className={styles.uploadContainer}>
-      <Typography variant="h4" component="h1" gutterBottom align="center" className={styles.pageTitle}>
+    // Ajustes de margin e padding para o Container principal
+    <Container
+      maxWidth="sm" // Mantém a largura máxima do formulário
+      sx={{
+        mt: { xs: 2, sm: 4 }, // Margem superior responsiva (menor em mobile)
+        mb: { xs: 2, sm: 4 }, // Margem inferior responsiva (menor em mobile)
+        px: { xs: 1, sm: 2, md: 3 }, // Padding lateral responsivo (menor em mobile)
+      }}
+      className={styles.uploadContainer} // Mantém a classe do CSS Module para outros estilos
+    >
+      {/* Ajuste de fonte para o título da página */}
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        align="center"
+        className={styles.pageTitle} // Mantém a classe para cor e margem
+        sx={{
+          fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }, // Tamanho de fonte responsivo
+          mb: { xs: 3, sm: 4 }, // Margem inferior responsiva (menor em mobile)
+        }}
+      >
         Upload de Novo Vídeo
       </Typography>
-      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      {/* Ajustes de padding para o Box do formulário */}
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3, p: { xs: 2, sm: 3 } }}> {/* Padding interno responsivo */}
         <TextField
           label="Título do Vídeo"
           variant="outlined"
@@ -110,6 +129,8 @@ const UploadVideoPage: React.FC = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
+          // Ajuste de fonte para o input e label
+          sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
         />
         <TextField
           label="Descrição (Opcional)"
@@ -120,19 +141,25 @@ const UploadVideoPage: React.FC = () => {
           rows={3}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          // Ajuste de fonte para o input e label
+          sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
         />
         <FormControl fullWidth margin="normal">
-          <InputLabel id="access-status-label">Status de Acesso</InputLabel>
+          {/* Ajuste de fonte para o label do Select */}
+          <InputLabel id="access-status-label" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Status de Acesso</InputLabel>
           <Select
             labelId="access-status-label"
             id="access-status"
             value={accessStatus}
             label="Status de Acesso"
             onChange={(e) => setAccessStatus(e.target.value as VideoAccessStatus)}
+            // Ajuste de fonte para o input Select
+            sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
           >
-            <MenuItem value={VideoAccessStatus.PRIVATE}>Privado</MenuItem>
-            <MenuItem value={VideoAccessStatus.PUBLIC_FOR_PATIENTS}>Público para Pacientes</MenuItem>
-            <MenuItem value={VideoAccessStatus.SPECIFIC_PATIENTS}>Pacientes Específicos</MenuItem>
+            {/* Ajuste de fonte para os itens do Select */}
+            <MenuItem value={VideoAccessStatus.PRIVATE} sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Privado</MenuItem>
+            <MenuItem value={VideoAccessStatus.PUBLIC_FOR_PATIENTS} sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Público para Pacientes</MenuItem>
+            <MenuItem value={VideoAccessStatus.SPECIFIC_PATIENTS} sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Pacientes Específicos</MenuItem>
           </Select>
         </FormControl>
         <input
@@ -143,7 +170,17 @@ const UploadVideoPage: React.FC = () => {
           id="video-upload-button"
         />
         <label htmlFor="video-upload-button">
-          <Button variant="outlined" component="span" fullWidth sx={{ mt: 2, mb: 2 }}>
+          <Button
+            variant="outlined"
+            component="span"
+            fullWidth
+            sx={{
+              mt: { xs: 1.5, sm: 2 }, // Margem superior responsiva
+              mb: { xs: 1.5, sm: 2 }, // Margem inferior responsiva
+              fontSize: { xs: '0.85rem', sm: '1rem' }, // Tamanho da fonte do botão
+              py: { xs: 1, sm: 1.5 } // Padding vertical do botão
+            }}
+          >
             {selectedFile ? `Arquivo Selecionado: ${selectedFile.name}` : 'Selecionar Arquivo de Vídeo'}
           </Button>
         </label>
@@ -153,7 +190,8 @@ const UploadVideoPage: React.FC = () => {
           color="primary"
           fullWidth
           disabled={loading}
-          sx={{ py: 1.5 }}
+          // Ajuste de padding e fonte para o botão de submit
+          sx={{ py: { xs: 1.2, sm: 1.5 }, fontSize: { xs: '0.9rem', sm: '1.1rem' } }}
         >
           {loading ? <CircularProgress size={24} color="inherit" /> : 'Fazer Upload'}
         </Button>
@@ -168,3 +206,4 @@ const UploadVideoPage: React.FC = () => {
 };
 
 export default UploadVideoPage;
+

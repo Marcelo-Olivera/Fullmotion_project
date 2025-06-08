@@ -1,45 +1,48 @@
+/* src/components/Header/Header.module.css */
+
 .logo img {
-    width: 200px;
+    width: 200px; /* Largura padrão do logo em desktop */
 }
 
-.header{
+.header {
     max-width: 2000px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Espaço entre logo e nav/menu */
     align-items: center;
     padding: 10px 20px;    
     background-color: #100F0D;
     box-sizing: border-box;
     box-shadow: #555 0px 0px 4px;
     z-index: 10;
+    /* Remover flex-wrap aqui, pois a navegação principal vai sumir */
 }
 
-.nav{
-    display: flex;
+.nav {
+    display: flex; /* <--- AJUSTADO: Visível por padrão em desktop */
     padding-left: 40px;
     justify-content: left;
     align-items: center;
-    flex-grow: 1;
+    flex-grow: 1; /* Permite que a nav ocupe espaço */
     gap: 2em;
 }
 
-.a{
+.a {
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* Tamanho padrão para desktop */
     font-weight: 500;
     color: #49c5b6;
 }
 
-.a:hover{
+.a:hover {
     color: #49c5b9a6;
 }
 
 .drawer {
     position: fixed;
     top: 0;
-    right: -350px; /* Começa fora da tela à direita */
-    width: 300px;
+    right: -350px;
+    width: 300px; /* Largura padrão do drawer */
     height: 100%;
     background: #100F0D;
     color: white;
@@ -48,27 +51,29 @@
     gap: 12px;
     padding: 20px;
     transition: right 0.3s ease;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
     z-index: 20;
 }
 
 .drawer.open {
-    right: 0; /* Quando aberto, desliza para dentro */
-  }
+    right: 0;
+}
 
 .drawerNav {
     display: flex;
     flex-direction: column;
     gap: 15px;
-  }
+    margin-top: 30px;
+}
 
-.link{
+.link {
     text-decoration: none;
-    font-size: 18px;
+    font-size: 18px; /* Tamanho padrão para links no drawer */
     color: #49c5b6; 
     background-color: #100F0D;
     border: none;
     padding-left: 0;
-  }
+}
 
 .closeButton {
     align-self: flex-end;
@@ -77,6 +82,7 @@
     color: #49c5b6;
     font-size: 24px;
     cursor: pointer;
+    padding: 5px;
 }
 
 .closeButton:hover {
@@ -84,42 +90,116 @@
     border-radius: 12px;
 }
 
-.backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.menu{
-    margin-right: 32px;
+.menu {
+    margin-right: 20px; /* Margem do botão de menu em desktop */
     color:#49c5b6;
     background-color: #100F0D;
     border: none;
+    cursor: pointer;
+    display: block; /* <--- AJUSTADO: Botão de menu visível por padrão (desktop) */
+    padding: 5px;
+    flex-shrink: 0;
 }
 
-.menu:hover{
+.menu:hover {
     background-color: #222;
     border-radius: 12px;
 }
 
-.container{
+.container { /* Wrapper para ícone e texto dos links do drawer */
     display: flex;
     align-items: center;
     color: #49c5b6;
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* Tamanho da fonte dos links do drawer (desktop) */
     cursor: pointer;
     gap: 10px;
     font-weight: 600;
+    padding: 8px 10px;
 }
 
-.container p{
+.container p {
     margin: 8px 4px;
 }
 
-.container:hover{
+.container:hover {
     border-radius: 8px;
     background-color: #222;
+}
+
+/* --- Media Queries para Responsividade --- */
+
+/* Para telas menores ou iguais a 900px (tablets em retrato, iPads - breakpoint 'md') */
+@media (max-width: 900px) {
+    .logo img {
+        width: 160px; /* Reduz o tamanho do logo */
+    }
+
+    .nav {
+        display: none; /* <--- AJUSTADO: Navegação principal SOME em tablets e celulares */
+    }
+
+    /* O botão .menu já está display: block; por padrão, então não precisa de ajuste aqui */
+    .menu {
+        margin-right: 10px; /* Ajusta margem para tablets */
+    }
+
+    .header {
+        padding: 10px 15px; /* Ajusta o padding do header */
+    }
+
+    .drawer {
+        width: 250px; /* Largura menor para o drawer em tablets */
+        padding: 15px;
+    }
+
+    .container {
+        font-size: 1.3rem; /* Reduz o tamanho da fonte dos links do drawer */
+    }
+    .container p {
+        font-size: 1.1rem; /* Reduz a fonte do parágrafo no drawer */
+    }
+    .container svg { /* Para os ícones dentro dos links do drawer */
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Para telas menores ou iguais a 600px (smartphones, iPhones - breakpoint 'sm' e 'xs') */
+@media (max-width: 600px) {
+    .logo img {
+        width: 140px; /* Reduz ainda mais o tamanho do logo */
+    }
+
+    /* O .nav continua display: none; */
+
+    .header {
+        padding: 8px 10px;
+    }
+
+    .menu {
+        margin-right: 5px;
+    }
+
+    .drawer {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .drawerNav {
+        gap: 10px;
+    }
+
+    .container {
+        font-size: 1.2rem;
+    }
+    .container p {
+        font-size: 1rem;
+    }
+    .container svg {
+        width: 24px;
+        height: 24px;
+    }
+    .closeButton {
+      font-size: 20px;
+    }
 }

@@ -28,8 +28,9 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useAuth } from '../../context/AuthContext'; // Para obter o usuário logado e token
+import { useAuth } from '../../context/AuthContext';
 
+// Enum para os papéis de usuário (devem espelhar seu backend)
 enum UserRole {
   ADMIN = 'admin',
   PHYSIOTHERAPIST = 'physiotherapist',
@@ -163,7 +164,7 @@ const UserManagementPage: React.FC = () => {
       });
 
       setMessage({ type: 'success', text: 'Usuário deletado com sucesso!' });
-      fetchUsers(); // Recarregar a lista de usuários
+      fetchUsers();
     } catch (error: any) {
       console.error('Erro ao deletar usuário:', error);
       const errorMessage = error.response?.data?.message || 'Falha ao deletar usuário.';
@@ -174,17 +175,18 @@ const UserManagementPage: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" component="h1" gutterBottom>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4, px: { xs: 1, sm: 2, md: 3 } }}> {/* Adicionado padding responsivo */}
+      {/* Box que organiza o título e o botão de "Criar Novo Usuário" */}
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3} sx={{ flexDirection: { xs: 'column', sm: 'row' }, gap: { xs: 2, sm: 0 } }}> {/* Ajustado para empilhar em mobile */}
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' } }}>
           Gerenciamento de Usuários
         </Typography>
-        {/* Botão para criar novo usuário */}
         <Button
           variant="contained"
           color="primary"
           startIcon={<AddIcon />}
           onClick={handleCreateClick}
+          sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem' }, py: { xs: 1, sm: 1.5 } }} 
         >
           Criar Novo Usuário
         </Button>
@@ -204,46 +206,52 @@ const UserManagementPage: React.FC = () => {
         <Alert severity="info">Nenhum usuário encontrado.</Alert>
       ) : (
         <Paper elevation={3}>
-          <TableContainer>
-            <Table aria-label="tabela de usuários">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Role</TableCell>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Criado Em</TableCell>
-                  <TableCell>Ações</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users.map((userItem) => ( // Renomeado para userItem para evitar conflito com 'user' do useAuth
-                  <TableRow key={userItem.id}>
-                    <TableCell>{userItem.email}</TableCell>
-                    <TableCell>{userItem.role}</TableCell>
-                    <TableCell>{userItem.id}</TableCell>
-                    <TableCell>{new Date(userItem.createdAt).toLocaleDateString()}</TableCell>
-                    <TableCell>
-                      {/* Botão de deletar */}
-                      {userItem.id !== user?.userId && ( // Impede o admin de deletar a própria conta
-                        <IconButton
-                          color="error"
-                          onClick={() => handleDeleteUser(userItem.id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      )}
-                    </TableCell>
+          {/* Box com overflow-x para rolagem horizontal da tabela */}
+          <Box sx={{ overflowX: 'auto' }}>
+            <TableContainer>
+              {/* minWidth garante que a tabela tenha uma largura mínima e force a rolagem se necessário */}
+              <Table aria-label="tabela de usuários" sx={{ minWidth: 650 }}>
+                <TableHead>
+                  <TableRow>
+                    {/* Ajuste de font-size responsivo para os cabeçalhos das células */}
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Email</TableCell>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Role</TableCell>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>ID</TableCell>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Criado Em</TableCell>
+                    <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>Ações</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {users.map((userItem) => (
+                    <TableRow key={userItem.id}>
+                      {/* Ajuste de font-size responsivo para o conteúdo das células */}
+                      <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>{userItem.email}</TableCell>
+                      <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>{userItem.role}</TableCell>
+                      <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>{userItem.id}</TableCell>
+                      <TableCell sx={{ fontSize: { xs: '0.75rem', sm: '0.85rem' } }}>{new Date(userItem.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell sx={{ whiteSpace: 'nowrap' }}> {/* Garante que os botões não quebrem linha */}
+                        {userItem.id !== user?.userId && (
+                          <IconButton
+                            color="error"
+                            size="small"
+                            onClick={() => handleDeleteUser(userItem.id)}
+                          >
+                            <DeleteIcon sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }} /> {/* Tamanho do ícone responsivo */}
+                          </IconButton>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </Paper>
       )}
 
-      {/* Modal de Criação de Usuário */}
+      {/* Modal de Criação de Usuário (ajustes de fonte e padding também) */}
       <Dialog open={createModalOpen} onClose={handleCreateModalClose} fullWidth maxWidth="sm">
-        <DialogTitle>Criar Novo Usuário</DialogTitle>
+        <DialogTitle sx={{ fontSize: { xs: '1.2rem', sm: '1.5rem' } }}>Criar Novo Usuário</DialogTitle>
         <DialogContent>
           <Box component="form" onSubmit={handleCreateUser} sx={{ mt: 2 }}>
             <TextField
@@ -255,6 +263,8 @@ const UserManagementPage: React.FC = () => {
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               required
+              // Estilos para o TextField interno (input, label, borda)
+              sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
             />
             <TextField
               label="Senha"
@@ -265,19 +275,21 @@ const UserManagementPage: React.FC = () => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
+              sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
             />
             <FormControl fullWidth margin="normal">
-              <InputLabel id="new-user-role-label">Role</InputLabel>
+              <InputLabel id="new-user-role-label" sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>Role</InputLabel>
               <Select
                 labelId="new-user-role-label"
                 id="new-user-role"
                 value={newRole}
                 label="Role"
                 onChange={(e) => setNewRole(e.target.value as UserRole)}
+                sx={{ '& .MuiInputBase-input': { fontSize: { xs: '0.9rem', sm: '1rem' } } }}
               >
                 {Object.values(UserRole).map((role) => (
-                  <MenuItem key={role} value={role}>
-                    {role.charAt(0).toUpperCase() + role.slice(1)} {/* Exibe 'Admin', 'Patient', 'Physiotherapist' */}
+                  <MenuItem key={role} value={role} sx={{ fontSize: { xs: '0.9rem', sm: '1rem' } }}>
+                    {role.charAt(0).toUpperCase() + role.slice(1)}
                   </MenuItem>
                 ))}
               </Select>
@@ -285,10 +297,10 @@ const UserManagementPage: React.FC = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCreateModalClose} color="secondary">
+          <Button onClick={handleCreateModalClose} color="secondary" sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem' } }}>
             Cancelar
           </Button>
-          <Button type="submit" onClick={handleCreateUser} color="primary" disabled={loading}>
+          <Button type="submit" onClick={handleCreateUser} color="primary" disabled={loading} sx={{ fontSize: { xs: '0.8rem', sm: '0.9rem' } }}>
             {loading ? <CircularProgress size={24} color="inherit" /> : 'Criar Usuário'}
           </Button>
         </DialogActions>
@@ -298,3 +310,9 @@ const UserManagementPage: React.FC = () => {
 };
 
 export default UserManagementPage;
+
+/*enum UserRole {
+  ADMIN = 'admin',
+  PHYSIOTHERAPIST = 'physiotherapist',
+  PATIENT = 'patient',
+}*/

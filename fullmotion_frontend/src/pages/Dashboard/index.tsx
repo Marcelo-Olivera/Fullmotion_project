@@ -1,3 +1,4 @@
+// src/pages/Dashboard/index.tsx
 import { useEffect, useState } from 'react';
 import styles from './Dashboard.module.css'; // Mantenha o CSS Module
 import { useAuth } from '../../context/AuthContext';

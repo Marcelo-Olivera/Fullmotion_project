@@ -8,11 +8,12 @@ interface ActionAreaCardProps {
   title: string;
   description: string;
   image?: string;
+  className?: string; // Adicionando a propriedade className
 }
 
-export default function ActionAreaCard({ title, description, image }: ActionAreaCardProps) {
+export default function ActionAreaCard({ title, description, image, className }: ActionAreaCardProps) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} className={className}>
       <CardActionArea>
         {image && (
           <CardMedia

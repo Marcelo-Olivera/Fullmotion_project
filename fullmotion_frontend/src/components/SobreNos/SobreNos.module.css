@@ -1,69 +1,169 @@
-.sobreNos{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 3fr;
-    grid-template-areas: 
-        "titulo titulo"
-        "texto imagem";
-    width: 100%;   
-}
+/* src/components/SobreNos/SobreNos.module.css */
 
-.containerTexto{
-    grid-area: texto;
-    padding: 0 5rem;
+.sobreNos {
+    padding: 20px 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    color: #f0f0f0;
 }
 
-.containerTexto p{
-    font-size: 1.5rem;
-    color: white;
+.titulo {
+    width: 100%;
+}
+
+/* NOVO: Wrapper para o conteúdo (texto e imagem) */
+.contentWrapper {
+    display: flex;
+    flex-direction: row; /* Layout padrão: lado a lado */
+    justify-content: space-around; /* Espaço entre as colunas */
+    align-items: center; /* Alinha verticalmente os itens */
+    gap: 40px; /* Espaçamento entre as colunas */
+    max-width: 1600px; /* Largura máxima do conteúdo */
+    width: 100%;
+    margin: 0 auto; /* Centraliza o wrapper */
+    padding: 0 20px; /* Padding interno para evitar que o conteúdo cole nas bordas */
+}
+
+/* NOVO: Coluna de Texto */
+.textColumn {
+    width: 50%; /* Largura fixa da coluna de texto no desktop */
+    line-height: 1.7;
+    font-size: 1.3em;
     text-align: justify;
 }
 
-.containerImagem {
-    grid-area: imagem;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+.textColumn p {
+    margin-bottom: 20px;
 }
 
-.parallax {
-    width: 80%;
-    background-image: url("src/components/SobreNos/SalaFullmotion.png");
-    height: 100%;
+.containerDiferenciais ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 30px;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    color: #49c5b6;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: left;
+    line-height: 1.3;
+}
+
+.check svg {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+}
+
+/* NOVO: Coluna de Imagem */
+.imageColumn {
+/*    flex: 0 0 550px; /* Largura fixa da coluna da imagem no desktop, não encolhe */
+    max-width: 750px; /* Garante que não ultrapasse essa largura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Garante que a imagem não transborde */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Garante que a imagem não transborde */
+}
+
+/* NOVO: Estilo para a imagem dentro da coluna */
+.aboutImage {
+    max-width: 750px;
+    width: 100%; /* Imagem preenche a largura da coluna */
+    height: 800px; /* Mantém a proporção */
+    border-radius: 8px;
+    object-fit: cover; /* Garante que a imagem cubra o espaço */
+}
+
+/* Se for usar parallax, reative e ajuste conforme o containerImagem */
+/* .parallax {
+    background-image: url('caminho/para/sua/imagem-de-fundo.jpg');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    border-radius: 12px;
+    height: 100%;
+    width: 100%;
+} */
+
+
+/* --- Media Queries para Responsividade --- */
+
+/* Para telas menores ou iguais a 900px (tablets em retrato, iPads - breakpoint 'md') */
+@media (max-width: 900px) {
+    .contentWrapper {
+        flex-direction: column; /* Empilha texto e imagem */
+        align-items: center; /* Centraliza os itens empilhados */
+        gap: 30px; /* Espaçamento entre texto e imagem quando empilhados */
+        padding: 0 10px; /* Padding lateral reduzido */
+    }
+
+    .textColumn {
+        padding-right: 0; /* Remove padding lateral */
+        font-size: 1em; /* Ajusta o tamanho da fonte para tablets */
+        width: 70%; /* Ocupa a largura total */
+        text-align: justify; /* Justifica o texto */
+    }
+
+    .imageColumn {
+        display: none; /* Exibe como bloco para ocupar a largura total */
+        /* flex: 0 0 auto; /* Remove largura fixa, ajusta automaticamente *
+        width: 80%; /* Ocupa 80% da largura do pai 
+        max-width: 400px; /* Limite máximo para a imagem 
+        height: auto; /* Altura flexível */
+    }
+    
+    .aboutImage {
+        width: 100%;
+        height: auto;
+    }
+
+    .sobreNos {
+        padding: 20px 15px; /* Menor padding geral para tablets */
+    }
+
+    .check {
+        font-size: 1.1rem;
+    }
+    .check svg {
+        width: 28px;
+        height: 28px;
+    }
 }
 
+/* Para telas menores ou iguais a 600px (smartphones, iPhones - breakpoint 'sm' e 'xs') */
+@media (max-width: 600px) {
+    .contentWrapper {
+        gap: 20px;
+    }
 
-.titulo{
-    margin-top: 2rem;
-    grid-area: titulo;
-    display: flex;
-    flex-direction: column;
-}
+    .sobreNos {
+        padding: 30px 10px; /* Padding ainda menor para celulares */
+    }
 
+    .textColumn {
+        font-size: 0.8em; /* Fonte um pouco menor para melhor legibilidade em celulares */
+    }
 
-.containerDiferenciais{
-    display: flex;
-}
+    .imageColumn {
+        width: 95%; /* Ocupa quase a largura total em celulares */
+        height: auto; /* Altura flexível */
+    }
 
-.containerDiferenciais ul{
-    list-style-type: none;
-}
-
-.check{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 3rem;
-    color: #49c5b6;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: left;
+    .check {
+        font-size: 1rem;
+        margin-top: 15px;
+    }
+    .check svg {
+        width: 24px;
+        height: 24px;
+    }
 }

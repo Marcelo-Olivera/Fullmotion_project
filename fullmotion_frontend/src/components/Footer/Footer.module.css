@@ -1,72 +1,171 @@
+/* src/components/FooterPro/Footer.module.css */
+
 .footer {
-    width: 100%;
-    background: #100F0D;
-    color: #49c5b6;
-    box-shadow: 0 -2px 8px #2226;
-    padding: 2rem 1rem 1rem 1rem;
+    background-color: #100F0D; /* Cor de fundo escura, consistente com seu tema */
+    color: #f0f0f0; /* Cor do texto padrão */
+    padding: 3rem 1.5rem; /* Padding superior/inferior e lateral */
+    box-sizing: border-box;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3); /* Sombra suave no topo */
 }
 
-.topSection {
-    width: 100%;
-    max-width: 900px;
+.mainContent {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin: 0 auto 1rem auto;
-    flex-wrap: wrap;
-    gap: 2rem;
+    justify-content: space-between; /* Espaço entre as colunas */
+    align-items: flex-start; /* Alinha o topo das colunas */
+    max-width: 1200px; /* Largura máxima do conteúdo do footer */
+    margin: 0 auto 2.5rem auto; /* Centraliza e adiciona margem inferior */
+    flex-wrap: wrap; /* Permite que as colunas quebrem a linha em telas menores */
+    gap: 2rem; /* Espaçamento entre as colunas */
+}
+
+.column {
+    flex: 1; /* Permite que as colunas cresçam e ocupem espaço */
+    min-width: 250px; /* Largura mínima para cada coluna antes de quebrar */
+    margin-bottom: 1.5rem; /* Margem inferior para quando as colunas empilharem */
 }
 
 .logo img {
-    width: 120px;
+    width: 150px; /* Tamanho do logo no footer */
     margin-bottom: 1rem;
 }
 
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    align-items: flex-start;
-    min-width: 120px;
-    margin-bottom: 1rem;
-}
-
-.menuLink {
-    color: #49c5b6;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: color 0.2s;
-}
-
-.menuLink:hover {
-    color: #fff;
-}
-
-.social {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 1rem;
-}
-
-.social a {
-    color: #49c5b6;
-    font-size: 2rem;
-    transition: color 0.2s;
-}
-
-.social a:hover {
-    color: #fff;
-}
-
-.copy {
-    color: #49c5b6;
+.description {
     font-size: 0.95rem;
-    opacity: 0.8;
-    text-align: center;
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 1.5rem;
 }
 
-.container{
+.socialIcons {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    gap: 1.5rem; /* Espaçamento entre os ícones sociais */
+}
+
+.socialIcons a {
+    color: #49c5b6; /* Cor dos ícones sociais */
+    font-size: 1.8rem; /* Tamanho dos ícones */
+    transition: color 0.2s ease;
+}
+
+.socialIcons a:hover {
+    color: #fff;
+}
+
+.columnTitle {
+    font-size: 1.2rem;
+    color: #49c5b6; /* Cor dos títulos das colunas */
+    margin-bottom: 1.2rem;
+    font-weight: bold;
+}
+
+.footerNav, .contactList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footerLink {
+    display: block; /* Cada link ocupa sua própria linha */
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 1rem;
+    margin-bottom: 0.8rem; /* Espaçamento entre os links */
+    transition: color 0.2s ease;
+}
+
+.footerLink:hover {
+    color: #49c5b6;
+}
+
+.contactList li {
+    display: flex;
+    align-items: flex-start; /* Alinha ícone e texto no topo */
+    gap: 10px;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: #f0f0f0;
+}
+
+.contactList li svg {
+    flex-shrink: 0; /* Impede que o ícone encolha */
+    color: #49c5b6;
+    font-size: 1.2rem;
+    margin-top: 2px; /* Pequeno ajuste para alinhamento vertical */
+}
+
+.contactList li p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+.copyright {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #ccc;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Linha divisória acima do copyright */
+}
+
+/* --- Media Queries para Responsividade --- */
+
+/* Para telas menores ou iguais a 900px (tablets em retrato, iPads - breakpoint 'md') */
+@media (max-width: 900px) {
+    .mainContent {
+        flex-direction: column; /* Colunas empilham */
+        align-items: center; /* Centraliza as colunas empilhadas */
+        gap: 1.5rem; /* Reduz o espaçamento entre as colunas empilhadas */
+        text-align: center; /* Centraliza o texto dentro das colunas */
+    }
+
+    .column {
+        min-width: 100%; /* Coluna ocupa largura total */
+        margin-bottom: 0; /* Removido margem, gap do pai lida */
+    }
+
+    .logo img {
+        width: 120px;
+    }
+
+    .socialIcons {
+        justify-content: center; /* Centraliza ícones sociais */
+    }
+
+    .footerNav, .contactList {
+        align-items: center; /* Centraliza links/contatos em coluna */
+    }
+
+    .contactList li {
+        justify-content: center; /* Centraliza itens da lista de contato */
+    }
+}
+
+/* Para telas menores ou iguais a 600px (smartphones, iPhones - breakpoint 'sm' e 'xs') */
+@media (max-width: 600px) {
+    .footer {
+        padding: 2rem 1rem; /* Reduz padding geral */
+    }
+
+    .mainContent {
+        gap: 1rem; /* Espaçamento menor */
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    .description, .footerLink, .contactList li p {
+        font-size: 0.9rem; /* Reduz o tamanho das fontes */
+    }
+
+    .socialIcons a {
+        font-size: 1.5rem; /* Reduz o tamanho dos ícones sociais */
+    }
+
+    .columnTitle {
+        font-size: 1.1rem;
+    }
+
+    .copyright {
+        font-size: 0.8rem;
+    }
 }

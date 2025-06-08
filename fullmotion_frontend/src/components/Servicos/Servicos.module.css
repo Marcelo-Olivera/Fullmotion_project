@@ -1,17 +1,67 @@
+/* src/components/Servicos/Servicos.module.css */
+
 .servicos{
+    /* Mantenha esses estilos gerais da seção */
     background: linear-gradient(to left, #49c5b6, #1c1c1c);
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Continua em coluna para a seção geral (título em cima, cards embaixo) */
     justify-content: center;
     margin-top: 3rem;
-    padding: 3rem;
+    padding: 3rem; /* Padding padrão para desktop */
     gap: 2rem;
 }
 
 .cards{
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-    justify-content: space-around;
-    align-items: center;
+    /* NOVO: Propriedades para CSS Grid Responsivo */
+    display: grid; /* <--- Muda para Grid */
+    /* grid-template-columns: Cria colunas que se ajustam.
+       - repeat(auto-fit, ...): Cria o máximo de colunas que couberem.
+       - minmax(280px, 1fr): Cada coluna terá no mínimo 280px de largura e no máximo 1 fração do espaço disponível.
+         Isso fará com que os cards se organizem em 1, 2, 3 colunas, dependendo da largura da tela. */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 20px; /* <--- Espaçamento entre os cards (melhor que 8px para cards) */
+    justify-items: center; /* Centraliza os cards dentro das suas células do grid */
+    align-items: stretch; /* Faz os cards terem a mesma altura na linha */
+    max-width: 1200px; /* Limita a largura máxima do grid de cards */
+    margin: 0 auto; /* Centraliza o grid de cards na página */
+    width: 100%; /* Ocupa 100% da largura do pai */
+}
+
+/* NOVO: Estilos para o ActionAreaCard (assumindo que ele tem um elemento raiz com essa classe ou é o próprio card) */
+/* Se ActionAreaCard tem uma largura fixa interna, precisaremos ajustá-la.
+   Se ele já é flexível, esta classe .cardItem servirá para o grid */
+.cardItem { /* <--- Adicione esta classe à div/componente raiz do ActionAreaCard no index.tsx */
+    width: 100%; /* Garante que o card ocupe a largura total da sua célula do grid */
+    /* Você pode adicionar estilos específicos para o visual do card aqui, se não vier do ActionAreaCard */
+    /* Por exemplo: background-color, border-radius, box-shadow, min-height, etc. */
+    box-sizing: border-box; /* Garante que padding/borda não estraguem a largura */
+}
+
+
+/* --- Media Queries para Responsividade --- */
+
+/* Para telas menores ou iguais a 900px (tablets em retrato, iPads - breakpoint 'md') */
+@media (max-width: 900px) {
+    .servicos {
+        padding: 2rem 1.5rem; /* Reduz o padding geral da seção */
+    }
+    .cards {
+        gap: 15px; /* Reduz o espaçamento entre cards */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Permite cards um pouco menores */
+    }
+}
+
+/* Para telas menores ou iguais a 600px (smartphones, iPhones - breakpoint 'sm' e 'xs') */
+@media (max-width: 600px) {
+    .servicos {
+        padding: 1.5rem 1rem; /* Reduz o padding ainda mais para celulares */
+    }
+    .cards {
+        gap: 15px;
+        /* Em celulares, queremos um card por linha. minmax(calc(100% - 20px), 1fr) garante quase a largura total */
+        grid-template-columns: 1fr; /* <--- Um card por linha */
+    }
+    .cardItem {
+        /* Se precisar que o card tenha um padding ou margem extra em mobile */
+    }
 }
